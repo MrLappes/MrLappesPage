@@ -1,0 +1,82 @@
+{
+  "header": {
+    "particles": "Částice",
+    "particlesToggle": {
+      "enable": "Povolit částice",
+      "disable": "Zakázat částice"
+    },
+    "particleCount": {
+      "100": "100 částic",
+      "200": "200 částic",
+      "300": "300 částic",
+      "500": "500 částic",
+      "750": "750 částic",
+      "1000": "1000 částic",
+      "1500": "1500 částic",
+      "2000": "2000 částic"
+    }
+  },
+  "home": {
+    "title": "Mike Busam",
+    "subtitle": "Vývoj her - webů - aplikací",
+    "subtitle2": "Programování je zábava! | Fitness nadšenec",
+    "buttons": {
+      "github": "GitHub Profil",
+      "skills": "Moje dovednosti"
+    },
+    "mediaAttr": {
+      "generated": "Obrázek vytvořen pomocí flux-dev",
+      "video": "Video vytvořeno pomocí OpenAI Sora"
+    },
+    "social": {
+      "title": "Najděte mě online",
+      "note": "Vezměte prosím na vědomí, že jsem velmi neaktivní na Twitch, YouTube a Instagramu",
+      "instagram": "Instagram",
+      "twitch": "Twitch",
+      "discord": "Discord",
+      "steam": "Steam",
+      "youtube": "YouTube"
+    },
+    "about": {
+      "title": "O mně",
+      "age": "Je mi {age} let (narozen 9.7.2003) a {status}.",
+      "location": "Pocházím z Badenu v Německu a momentálně pracuji v Bavorsku.",
+      "gym": "Od {years} (červenec 2022) trénuji přirozeně 3-5krát týdně v posilovně a kladu velký důraz na zdravý životní styl.",
+      "developer": "Jako vášnivý hobby vývojář pracuji na různých projektech a neustále rozšiřuji své dovednosti v různých oblastech vývoje softwaru.",
+      "year": "jednoho roku",
+      "years": "{count} let",
+      "bachelor": {
+        "inProgress": "studuji bakalářský program v informatice na univerzitě Provadis",
+        "completed": "úspěšně jsem dokončil bakalářský program v informatice na univerzitě Provadis v {date}"
+      }
+    },
+    "skills": {
+      "title": "Moje dovednosti",
+      "vue": "Vývoj webů ve Vue",
+      "flutter": "Vývoj aplikací ve Flutteru",
+      "godot": "Vývoj her v Godotu",
+      "unity": "VR a XR hry v Unity",
+      "ai": "AI generování obrázků",
+      "arch": "Používání Arch Linux s KDE",
+      "design": "Design v Affinity Designer/Photo",
+      "pixel": "Pixel Art v Libresprite",
+      "editor": "VSCode a Vim Editor",
+      "dark": "Milovník tmavého režimu",
+      "backend": "Tvorba backendů pomocí FastAPI v Pythonu",
+      "discordbots": "Vývoj Discord botů v JS a Pythonu"
+    },
+    "project": {
+      "title": "PlatePal",
+      "description": "Sdílejte, co jíte, a pozvěte ostatní, aby se k vám připojili. Chatujte s nimi, pozvěte své přátele a vytvářejte skupiny, ke kterým se mohou připojit pouze vaši přátelé.",
+      "tags": {
+        "flutter": "Flutter",
+        "social": "Sociální aplikace",
+        "coming": "Připravuje se"
+      },
+      "soon": "Připravuje se"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Mike Busam | PlatePal"
+  }
+}

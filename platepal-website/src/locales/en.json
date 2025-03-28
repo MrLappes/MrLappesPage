@@ -1,0 +1,82 @@
+{
+  "header": {
+    "particles": "Particles",
+    "particlesToggle": {
+      "enable": "Enable Particles",
+      "disable": "Disable Particles"
+    },
+    "particleCount": {
+      "100": "100 Particles",
+      "200": "200 Particles",
+      "300": "300 Particles",
+      "500": "500 Particles",
+      "750": "750 Particles",
+      "1000": "1000 Particles",
+      "1500": "1500 Particles",
+      "2000": "2000 Particles"
+    }
+  },
+  "home": {
+    "title": "Mike Busam",
+    "subtitle": "Game - Website - App Dev",
+    "subtitle2": "Coding is fun! | Fitness Enthusiast",
+    "buttons": {
+      "github": "GitHub Profile",
+      "skills": "My Skills"
+    },
+    "mediaAttr": {
+      "generated": "Image generated with flux-dev",
+      "video": "Video created with OpenAI Sora"
+    },
+    "social": {
+      "title": "Find Me Online",
+      "note": "Please note that I am very inactive on Twitch, YouTube, and Instagram",
+      "instagram": "Instagram",
+      "twitch": "Twitch",
+      "discord": "Discord",
+      "steam": "Steam",
+      "youtube": "YouTube"
+    },
+    "about": {
+      "title": "About Me",
+      "age": "I am {age} years old (born on July 9, 2003) and {status}.",
+      "location": "I originally come from Baden, Germany and currently work in Bavaria.",
+      "gym": "Since {years} (July 2022), I've been training naturally 3-5 times a week at the gym and place great importance on a healthy lifestyle.",
+      "developer": "As a passionate hobby developer, I work on various projects and constantly expand my skills in different areas of software development.",
+      "year": "one year",
+      "years": "{count} years",
+      "bachelor": {
+        "inProgress": "I'm pursuing my Bachelor's degree in Computer Science at Provadis University",
+        "completed": "I successfully completed my Bachelor's degree in Computer Science at Provadis University in {date}"
+      }
+    },
+    "skills": {
+      "title": "My Skills",
+      "vue": "Website Development in Vue",
+      "flutter": "App Development in Flutter",
+      "godot": "Game Development in Godot",
+      "unity": "VR and XR Games in Unity",
+      "ai": "AI Image Generation",
+      "arch": "Using Arch Linux with KDE",
+      "design": "Design in Affinity Designer/Photo",
+      "pixel": "Pixel Art in Libresprite",
+      "editor": "VSCode and Vim Editor",
+      "dark": "Dark Mode Enthusiast",
+      "backend": "Writing backends using FastAPI in Python",
+      "discordbots": "Writing Discord bots in JS and Python"
+    },
+    "project": {
+      "title": "PlatePal",
+      "description": "Share what you're eating and invite others to join you. Chat with them, invite your friends, and create groups that only your friends can join.",
+      "tags": {
+        "flutter": "Flutter",
+        "social": "Social App",
+        "coming": "Coming Soon"
+      },
+      "soon": "Coming Soon"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Mike Busam | PlatePal"
+  }
+}
