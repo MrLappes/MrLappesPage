@@ -2,8 +2,8 @@
 import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-// Use explicit global scope to ensure translations work
-const { t, locale } = useI18n({ useScope: 'global' });
+// Use the i18n composition API
+const { t, locale } = useI18n();
 
 const props = defineProps({
   darkMode: Boolean
@@ -90,11 +90,12 @@ const skills = [
 
 // Social media links
 const socialLinks = [
-  { name: 'home.social.instagram', icon: 'fab fa-instagram', color: 'text-pink-500', url: 'https://www.instagram.com/mrlappes/channel/' },
-  { name: 'home.social.twitch', icon: 'fab fa-twitch', color: 'text-purple-500', url: 'https://www.twitch.tv/kinglappes' },
-  { name: 'home.social.discord', icon: 'fab fa-discord', color: 'text-indigo-500', username: 'mrlappes' },
   { name: 'home.social.steam', icon: 'fab fa-steam', color: 'text-gray-500', url: 'https://steamcommunity.com/id/dergottderherr/' },
+  { name: 'home.social.discord', icon: 'fab fa-discord', color: 'text-indigo-500', url: 'https://discordapp.com/users/mrlappes' },
+  { name: 'home.social.instagram', icon: 'fab fa-instagram', color: 'text-pink-500', url: 'https://www.instagram.com/mrlappes/channel/' },
   { name: 'home.social.youtube', icon: 'fab fa-youtube', color: 'text-red-500', url: 'https://www.youtube.com/@MrLappes' },
+  { name: 'home.social.twitch', icon: 'fab fa-twitch', color: 'text-purple-500', url: 'https://www.twitch.tv/kinglappes' },
+  { name: 'home.social.itch', icon: 'fab fa-itch-io', color: 'text-red-500', url: 'https://mrlappes.itch.io/casual-day'}
 ];
 
 onMounted(() => {
@@ -109,7 +110,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto">
+  <div class="max-w-4xl mx-auto no-select">
     <!-- Hero Section -->
     <section class="py-10 mb-16">
       <div class="flex flex-col md:flex-row items-center justify-between gap-8">
@@ -231,7 +232,6 @@ onMounted(() => {
           <template v-for="(social, index) in socialLinks" :key="index">
             <!-- URL based links -->
             <a 
-              v-if="social.url"
               :href="social.url" 
               target="_blank" 
               class="flex items-center gap-4 bg-white dark:bg-gray-700 p-4 rounded-lg shadow hover:shadow-md transition-all duration-300 hover:-translate-y-1"
@@ -239,19 +239,7 @@ onMounted(() => {
               <i :class="[social.icon, social.color, 'text-2xl']"></i>
               <span class="text-gray-800 dark:text-white">{{ t(social.name) }}</span>
             </a>
-            
-            <!-- Username based links (Discord) -->
-            <div 
-              v-if="social.username"
-              class="flex items-center gap-4 bg-white dark:bg-gray-700 p-4 rounded-lg shadow"
-            >
-              <i :class="[social.icon, social.color, 'text-2xl']"></i>
-              <div>
-                <span class="text-gray-800 dark:text-white">{{ t(social.name) }}</span>
-                <p class="text-sm text-gray-600 dark:text-gray-400">{{ social.username }}</p>
-              </div>
-            </div>
-          </template>
+            </template>
         </div>
       </div>
     </section>
@@ -319,6 +307,14 @@ onMounted(() => {
 
 <style scoped>
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+/* Make text unselectable */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 /* Smooth scrolling */
 html {

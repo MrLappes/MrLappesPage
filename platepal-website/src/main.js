@@ -2,40 +2,32 @@ import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 import './style.css'
 import App from './App.vue'
-import de from './locales/de.json?raw'
-import en from './locales/en.json?raw'
-import cs from './locales/cs.json?raw'
+import en from './locales/en'
+import de from './locales/de'
+import cs from './locales/cs'
 
-const parseJSON = (jsonString) => {
-  try {
-    return JSON.parse(jsonString)
-  } catch (e) {
-    console.error('Error parsing JSON locale file:', e)
-    return {}
-  }
-}
+// Get the browser language or saved preference
+const savedLocale = localStorage.getItem('locale');
+const browserLocale = navigator.language.split('-')[0];
+const availableLocales = ['de', 'en', 'cs'];
+const defaultLocale = (savedLocale && availableLocales.includes(savedLocale)) ? 
+                      savedLocale : 
+                      (availableLocales.includes(browserLocale) ? browserLocale : 'en');
 
-const messages = {
-  de: parseJSON(de),
-  en: parseJSON(en),
-  cs: parseJSON(cs)
-}
-
-const savedLocale = localStorage.getItem('locale') || navigator.language.split('-')[0]
-const locale = ['de', 'en', 'cs'].includes(savedLocale) ? savedLocale : 'de'
-
+// Create i18n instance
 const i18n = createI18n({
-  legacy: false,
-  locale: locale,
+  legacy: false, // You must set `false`, to use Composition API
+  globalInjection: true, // If you want to use $t in template
+  locale: defaultLocale,
   fallbackLocale: 'en',
-  globalInjection: true,
-  messages,
-  missing: (locale, key) => {
-    console.warn(`Missing translation: [${locale}] ${key}`)
-    return key
+  messages: {
+    "en": en,
+    "de": de,
+    "cs": cs
   }
 })
 
+// Mount app with i18n
 const app = createApp(App)
 app.use(i18n)
 app.mount('#app')

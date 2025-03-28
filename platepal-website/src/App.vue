@@ -4,11 +4,13 @@ import { useI18n } from 'vue-i18n';
 import HomePage from './components/HomePage.vue';
 import AnimatedBackground from './components/AnimatedBackground.vue';
 
+// Use the i18n composition API
 const { t, locale } = useI18n();
 
 const darkMode = ref(localStorage.getItem('darkMode') === 'true' || window.matchMedia('(prefers-color-scheme: dark)').matches);
 const showParticles = ref(localStorage.getItem('showParticles') !== 'false');
 const maxParticles = ref(parseInt(localStorage.getItem('maxParticles')) || 500);
+const mobileMenuOpen = ref(false);
 
 const languages = [
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
@@ -64,15 +66,37 @@ const updateMaxParticles = (event) => {
 const changeLanguage = (langCode) => {
   locale.value = langCode;
   langDropdownOpen.value = false;
+  mobileMenuOpen.value = false;
 };
 
 const toggleLangDropdown = () => {
   langDropdownOpen.value = !langDropdownOpen.value;
 };
 
+const toggleMobileMenu = (event) => {
+  // Stop event propagation to prevent immediate closing
+  if (event) {
+    event.stopPropagation();
+  }
+  mobileMenuOpen.value = !mobileMenuOpen.value;
+  // Close language dropdown if it's open
+  if (langDropdownOpen.value) {
+    langDropdownOpen.value = false;
+  }
+};
+
 const handleClickOutside = (event) => {
+  // Don't close the mobile menu if clicking the menu button
+  if (event.target.closest('.mobile-menu-button')) {
+    return;
+  }
+  
   if (langDropdownOpen.value && !event.target.closest('.lang-dropdown')) {
     langDropdownOpen.value = false;
+  }
+  
+  if (mobileMenuOpen.value && !event.target.closest('.mobile-menu')) {
+    mobileMenuOpen.value = false;
   }
 };
 
@@ -99,7 +123,8 @@ onMounted(() => {
           </h1>
         </div>
         
-        <div class="flex items-center space-x-4">
+        <!-- Desktop Controls - Hidden on mobile -->
+        <div class="hidden md:flex items-center space-x-4">
           <!-- Language Selector -->
           <div class="relative lang-dropdown">
             <button 
@@ -144,7 +169,7 @@ onMounted(() => {
           </div>
           
           <!-- Particles Count Dropdown -->
-          <div class="hidden md:block relative">
+          <div class="relative">
             <select 
               v-if="showParticles"
               v-model="maxParticles" 
@@ -177,7 +202,103 @@ onMounted(() => {
             </svg>
           </button>
         </div>
+        
+        <!-- Mobile Menu Button - Only visible on mobile -->
+        <button 
+          @click.stop="toggleMobileMenu" 
+          class="mobile-menu-button md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+          aria-label="Toggle mobile menu"
+        >
+          <svg v-if="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
+      
+      <!-- Mobile Menu Drawer -->
+      <div 
+        v-if="mobileMenuOpen" 
+        class="mobile-menu md:hidden bg-white dark:bg-gray-800 shadow-lg border-t dark:border-gray-700 p-4 pt-6 transition-all duration-300"
+        @click.stop
+      >
+        <div class="space-y-5">
+          <!-- Dark Mode Toggle in Mobile Menu -->
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300 pt-4 font-medium">{{ !darkMode ? '☀️ Light Mode' : '🌙 Dark Mode' }}</span>
+            <button 
+              @click="toggleDarkMode" 
+              class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-600 transition-colors duration-200"
+            >
+              <span
+                :class="!darkMode ? 'translate-x-6 bg-yellow-400' : 'translate-x-1 bg-white'"
+                class="inline-block h-4 w-4 transform rounded-full transition-transform duration-200"
+              />
+            </button>
+          </div>
+          
+          <!-- Particles Toggle in Mobile Menu -->
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300 font-medium">{{ t('header.particles') }}</span>
+            <button 
+              @click="toggleParticles" 
+              class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-600 transition-colors duration-200"
+            >
+              <span
+                :class="showParticles ? 'translate-x-6 bg-[#e384c7]' : 'translate-x-1 bg-white'"
+                class="inline-block h-4 w-4 transform rounded-full transition-transform duration-200"
+              />
+            </button>
+          </div>
+          
+          <!-- Particles Count in Mobile Menu -->
+          <div v-if="showParticles" class="flex flex-col space-y-2">
+            <span class="text-gray-700 dark:text-gray-300 font-medium">{{ t('header.particles') }} {{ maxParticles }}</span>
+            <input 
+              type="range" 
+              min="100" 
+              max="2000" 
+              step="100" 
+              v-model="maxParticles"
+              class="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer accent-[#e384c7]"
+            />
+            <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+              <span>100</span>
+              <span>1000</span>
+              <span>2000</span>
+            </div>
+          </div>
+          
+          <!-- Language Selector in Mobile Menu -->
+          <div class="pt-2 border-t dark:border-gray-700">
+            <div class="grid grid-cols-1 gap-2">
+              <button
+                v-for="lang in languages"
+                :key="lang.code"
+                @click="changeLanguage(lang.code)"
+                class="flex items-center space-x-2 p-3 rounded-md text-left relative"
+                :class="locale === lang.code 
+                  ? 'bg-[#e384c7] bg-opacity-15 text-whitefont-medium' 
+                  : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'"
+              >
+                <span class="text-lg">{{ lang.flag }}</span>
+                <span>{{ lang.name }}</span>
+                <span 
+                  v-if="locale === lang.code" 
+                  class="absolute right-3 text-[#e384c7]"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
     </header>
     
     <main class="container mx-auto px-4 py-8 relative z-10">

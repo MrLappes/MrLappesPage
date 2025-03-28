@@ -2,20 +2,19 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import tailwind from '@tailwindcss/vite'
-import { fileURLToPath, URL } from 'url'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    tailwind()
+    tailwind(),
+    VueI18nPlugin({
+      include: resolve(__dirname, './src/locales/**/*.json'),
+    }),
   ],
   build: {
-    // Change output directory to avoid permission issues
     outDir: '/var/www/platepal',
     emptyOutDir: true,
-    // Ensure JSON files are processed
-    assetsInlineLimit: 0,
   },
   resolve: {
     alias: {
@@ -23,6 +22,14 @@ export default defineConfig({
     },
     extensions: ['.js', '.json', '.vue']
   },
-  // Explicitly tell Vite to process JSON files
-  assetsInclude: ['**/*.json'],
+  json: {
+    stringify: false
+  },
+  css: {
+    devSourcemap: true,
+  },
+  assetsInclude: ['**/*.json', '**/*.mp4', '**/*.svg', '**/*.png'],
+  server: {
+    hmr: true
+  }
 })
