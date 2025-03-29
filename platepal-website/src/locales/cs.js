@@ -1,88 +1,93 @@
 export default {
-        "header": {
-            "particles": "Částice",
-            "particlesToggle": {
-                "enable": "Zapnout částice",
-                "disable": "Vypnout částice"
-            },
-            "particleCount": {
-                "100": "100 částic",
-                "200": "200 částic",
-                "300": "300 částic",
-                "500": "500 částic",
-                "750": "750 částic",
-                "1000": "1000 částic",
-                "1500": "1500 částic",
-                "2000": "2000 částic (pro odvážné!)"
-            }
+    "header": {
+        "particles": "Partikle",
+        "particlesToggle": {
+        "enable": "Partikle zapnout",
+        "disable": "Partikle vypnout"
         },
-        "home": {
-            "title": "Mike Busam",
-            "subtitle": "Vývoj her - webů - aplikací",
-            "subtitle2": "Kódování je zábava! | Fitness blázen",
-            "buttons": {
-                "github": "Můj GitHub",
-                "skills": "Co všechno umím"
-            },
-            "mediaAttr": {
-                "generated": "Obrázek vykouzlen pomocí flux-dev",
-                "video": "Video vytvořeno pomocí OpenAI Sora"
-            },
-            "social": {
-                "title": "Kde mě najdete online",
-                "note": "PS: Na Twitchi, YouTube a Instagramu jsem fakt, fakt neaktivní.",
-                "instagram": "Instagram",
-                "twitch": "Twitch",
-                "discord": "Discord",
-                "steam": "Steam",
-                "youtube": "YouTube",
-                "itch": "Itch.io"
-            },
-            "about": {
-                "title": "O mně",
-                "age": "Čau! Je mi {age} let (narodil jsem se 9.7.2003) a {status}.",
-                "location": "Pocházím z krásného Badenu v Německu a teď makám v Bavorsku.",
-                "gym": "Od {years} (červenec 2022) pařím v posilovně 3-5× týdně a jedu zdravý životní styl. Gainz jsou život!",
-                "developer": "Jako zapálený hobby vývojář bastlím na různých projektech a neustále nasávám nové znalosti ze všech možných tech oblastí.",
-                "year": "jednoho roku",
-                "years": "{count} let",
-                "bachelor": {
-                    "inProgress": "se aktuálně prokousávám bakalářem z informatiky na univerzitě Provadis",
-                    "completed": "jsem v {date} úspěšně dokončil bakaláře z informatiky na univerzitě Provadis"
-                }
-            },
-            "skills": {
-                "title": "Co všechno umím",
-                "vue": "Oživovat weby pomocí Vue",
-                "flutter": "Kouzlit appky ve Flutteru",
-                "godot": "Tvořit hry v Godotu",
-                "unity": "Vytvářet VR a XR světy v Unity",
-                "ai": "AI generování obrázků (stroje dělají umění!)",
-                "arch": "Používat Arch Linux s KDE (protože můžu)",
-                "design": "Designové kejkle v Affinity Designer/Photo",
-                "pixel": "Pixel Art v Libresprite (čistá nostalgie!)",
-                "editor": "VSCode a Vim (praví vývojáři používají Vim, ne?)",
-                "dark": "Tmavý režim na všem (oči děkují)",
-                "backend": "Backend čarování s FastAPI v Pythonu",
-                "discordbots": "Stavět Discord boty v JS a Pythonu"
-            },
-            "project": {
-                "title": "PlatePal",
-                "description": "Ukaž světu, co máš na talíři, a najdi parťáky na společné hodování! Chatuj s nimi, popadni své kámoše a založ kulinářské tajné spolky - jen pro tvé oblíbence.",
-                "tags": {
-                    "flutter": "Flutter",
-                    "social": "Sociální aplikace",
-                    "coming": "Už brzy"
-                },
-                "soon": "Už brzy k mání!"
-            }
+        "particleCount": {
+        "100": "100 Partiklů",
+        "200": "200 Partiklů",
+        "300": "300 Partiklů",
+        "500": "500 Partiklů",
+        "750": "750 Partiklů",
+        "1000": "1000 Partiklů",
+        "1500": "1500 Partiklů",
+        "2000": "2000 Partiklů (Divoké!)"
         },
-        "footer": {
-            "copyright": "© {year} Mike Busam | PlatePal"
-        },
-        "animations": {
-            "particleCount": "{current}/{max} částic",
-            "hint": "Levým tlačítkem částice odpálíte, pravým vytvoříte nové! Podržením nabijete silnější efekt.",
-            "chargeIndicator": "Nabíjení: {percent}%"
+        "touchMode": "Dotykový režim",
+        "touchModeToggle": {
+        "enable": "Zapnout dotykový režim",
+        "disable": "Vypnout dotykový režim"
         }
+    },
+    "home": {
+        "title": "Mike Busam",
+        "subtitle": "Game - Web - App Dev",
+        "subtitle2": "Prostě to dělat | Fitness enthusiast",
+        "buttons": {
+        "github": "GitHub",
+        "skills": "Moje nástroje"
+        },
+        "mediaAttr": {
+        "generated": "Obrázek vytvořen s flux-dev",
+        "video": "Video vytvořeno s OpenAI Sora"
+        },
+        "social": {
+        "title": "Sociální věci, raději přes síť",
+        "note": "PS: Na Twitch, YouTube, Itch a Instagram jsem velmi, velmi neaktivní.",
+        "instagram": "Instagram",
+        "twitch": "Twitch",
+        "discord": "Discord",
+        "steam": "Steam",
+        "youtube": "YouTube",
+        "itch": "Itch.io"
+        },
+        "about": {
+        "title": "O mně",
+        "age": "Je mi {age} let (narozen 09.07.2003) a {status}.",
+        "location": "Původně z Badenu, teď pracuji v Mnichově.",
+        "gym": "Od {years} (červenec 2022) chodím 3-5× týdně do gymu a zaměřuji se na maximální gainz.",
+        "developer": "Jako hobby-dev programuji, co mě baví, jako tenhle web. Občas programuji i užitečné věci.",
+        "year": "jednoho roku",
+        "years": "{count} let",
+        "bachelor": {
+            "inProgress": "v pohodě procházím bakalářem informatiky na Provadis Hochschule",
+            "completed": "v {date} jsem dokončil bakaláře informatiky na Provadis Hochschule"
+        }
+        },
+        "skills": {
+        "title": "Moje nástroje",
+        "vue": "Vue.js je super",
+        "flutter": "Flutter je taky super",
+        "godot": "Godot ftw",
+        "unity": "Go-to pro VR a XR",
+        "ai": "AI generování obrazů (Flux, Stable Diffusion, custom LoRas)",
+        "arch": "Arch Linux s KDE (btw)",
+        "design": "Design v Affinity Designer/Photo",
+        "pixel": "Pixel Art v Libresprite",
+        "editor": "VSCode a Vim (VSCode pro velké projekty, Vim pro vše ostatní)",
+        "dark": "Dark Mode fanda",
+        "backend": "Hlavně Python s FastAPI",
+        "discordbots": "Normální trash-bot kódér (JS a Python)"
+        },
+        "project": {
+        "title": "PlatePal",
+        "description": "Sdílej, co jíš a pozvi ostatní ke společnému jídlu. Chatuj s nimi, pozvi své přátele a vytvoř skupiny, do kterých mohou jen tví přátelé.",
+        "tags": {
+            "flutter": "Flutter",
+            "social": "Social App",
+            "coming": "Přichází?"
+        },
+        "soon": "(možná) Brzy dostupné!"
+        }
+    },
+    "footer": {
+        "copyright": "© {year} Mike Busam | PlatePal"
+    },
+    "animations": {
+        "particleCount": "{current}/{max} Partiklů",
+        "hint": "Levý klik pro postrčení partiklů, pravý klik pro spawn nových! Podržením nabijete silnější efekt.",
+        "chargeIndicator": "Nabíjení: {percent}%"
+    }
 }

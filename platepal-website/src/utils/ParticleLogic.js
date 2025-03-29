@@ -13,7 +13,7 @@ export function getParticleConfig(isDark, maxParticles) {
 }
 
 export function createParticle(x, y, config) {
-  return {
+  const particle = {
     x,
     y,
     size: config.baseSize + Math.random() * config.variantSize,
@@ -23,13 +23,19 @@ export function createParticle(x, y, config) {
     baseSpeedY: (Math.random() - 0.5) * config.variantSpeed,
     color: config.colors[Math.floor(Math.random() * config.colors.length)],
     opacity: 0.1 + Math.random() * config.opacity,
+    initialOpacity: 0.1 + Math.random() * config.opacity, 
     rotation: Math.random() * 360,
     rotationSpeed: (Math.random() - 0.5) * 2,
-    // New properties for enhanced effects
-    energy: 1.0, // For energy-based effects
-    trail: [], // For trailing effect
-    maxTrailLength: Math.floor(Math.random() * 5) // Random trail length
+    
+    energy: 1.0, 
+    trail: [], 
+    maxTrailLength: Math.floor(Math.random() * 5), 
+    
+    expiresAt: null, 
+    expiring: false 
   };
+  
+  return particle;
 }
 
 export function createParticles(config) {
@@ -44,13 +50,31 @@ export function createParticles(config) {
   return particles;
 }
 
-export function updateAndDrawParticles(ctx, particles, mouseX, mouseY, scrollFactor, canvas) {
+export function updateAndDrawParticles(ctx, particles, mouseX, mouseY, scrollFactor, canvas, shouldAttract = true, chargeInfo = null) {
+  
+  let timeScale = 1;
+  let attractionRadius = 200; 
+  
+  
+  if (chargeInfo && chargeInfo.isCharging) {
+    if (chargeInfo.type === 'right') {
+      
+      timeScale = Math.max(0.3, 1 - (chargeInfo.level * 0.7)); 
+      
+      
+      console.log(`Black hole effect: timeScale = ${timeScale}, charge level = ${chargeInfo.level}`);
+    } else if (chargeInfo.type === 'left') {
+      
+      attractionRadius = 200 + (chargeInfo.level * 600);
+    }
+  }
+  
   particles.forEach((p) => {
-    // Store previous position for trail detection
+    
     const prevX = p.x;
     const prevY = p.y;
     
-    // Add current position to trail with reduced capacity
+    
     if (Math.random() > 0.7 && p.maxTrailLength > 0) {
       p.trail.push({ x: p.x, y: p.y });
       if (p.trail.length > p.maxTrailLength) {
@@ -58,45 +82,57 @@ export function updateAndDrawParticles(ctx, particles, mouseX, mouseY, scrollFac
       }
     }
     
-    // Mouse attraction/repulsion
-    const dx = mouseX - p.x;
-    const dy = mouseY - p.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    const maxDistance = 200;
     
-    if (distance < maxDistance) {
-      const force = (maxDistance - distance) / maxDistance;
-      p.speedX += (dx / distance) * force * 0.2;
-      p.speedY += (dy / distance) * force * 0.2;
+    
+    if (shouldAttract && mouseX !== -1000 && mouseY !== -1000) {
+      const dx = mouseX - p.x;
+      const dy = mouseY - p.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      if (distance < attractionRadius) {
+        
+        let force = (attractionRadius - distance) / attractionRadius;
+        
+        
+        if (chargeInfo && chargeInfo.isCharging && chargeInfo.type === 'left') {
+          force *= (1 + chargeInfo.level * 2); 
+        }
+        
+        p.speedX += (dx / distance) * force * 0.2;
+        p.speedY += (dy / distance) * force * 0.2;
+      }
     }
     
-    // Update position with enhanced physics
-    p.x += (p.speedX + p.baseSpeedX) * scrollFactor * (1 + p.energy * 0.2);
-    p.y += (p.speedY + p.baseSpeedY) * scrollFactor * (1 + p.energy * 0.2);
     
-    // Gradual speed reduction (air resistance)
+    const effectiveScrollFactor = scrollFactor * timeScale;
+    
+    
+    p.x += (p.speedX + p.baseSpeedX * timeScale) * effectiveScrollFactor * (1 + p.energy * 0.2);
+    p.y += (p.speedY + p.baseSpeedY * timeScale) * effectiveScrollFactor * (1 + p.energy * 0.2);
+    
+    
     p.speedX *= 0.96;
     p.speedY *= 0.96;
     
-    // Energy dissipation
+    
     p.energy = Math.max(0, p.energy * 0.99);
     
-    // Update rotation based on movement and energy
-    p.rotation += p.rotationSpeed * scrollFactor * (1 + p.energy * 0.5);
     
-    // Screen wrapping with slight randomness for natural look
+    p.rotation += p.rotationSpeed * effectiveScrollFactor * (1 + p.energy * 0.5);
+    
+    
     let wrapped = false;
     if (p.x < -p.size) { p.x = canvas.width + p.size + Math.random() * 10; wrapped = true; }
     if (p.x > canvas.width + p.size) { p.x = -p.size - Math.random() * 10; wrapped = true; }
     if (p.y < -p.size) { p.y = canvas.height + p.size + Math.random() * 10; wrapped = true; }
     if (p.y > canvas.height + p.size) { p.y = -p.size - Math.random() * 10; wrapped = true; }
     
-    // Clear trail if wrapped to prevent lines across screen
+    
     if (wrapped || Math.abs(p.x - prevX) > canvas.width/2 || Math.abs(p.y - prevY) > canvas.height/2) {
       p.trail = [];
     }
     
-    // Draw trail if it exists
+    
     if (p.trail.length > 0) {
       ctx.beginPath();
       ctx.moveTo(p.trail[0].x, p.trail[0].y);
@@ -110,13 +146,13 @@ export function updateAndDrawParticles(ctx, particles, mouseX, mouseY, scrollFac
       ctx.stroke();
     }
     
-    // Draw the particle with energy-based glow
+    
     ctx.save();
     ctx.translate(p.x, p.y);
     ctx.rotate((p.rotation * Math.PI) / 180);
     ctx.globalAlpha = p.opacity;
     
-    // Enhanced glow for energized particles
+    
     if (p.energy > 0.5) {
       ctx.shadowBlur = p.size * p.energy * 2;
       ctx.shadowColor = p.color;
@@ -124,7 +160,7 @@ export function updateAndDrawParticles(ctx, particles, mouseX, mouseY, scrollFac
     
     ctx.fillStyle = p.color;
     
-    // Draw star shape
+    
     const spikes = 5;
     const outerRadius = p.size * (1 + p.energy * 0.5);
     const innerRadius = p.size / 2;
@@ -166,18 +202,18 @@ export function handleParticleClick(particles, clickX, clickY, repelRadius, repe
       const force = (repelRadius - distance) / repelRadius;
       const angle = Math.atan2(dy, dx);
       
-      // Enhanced push physics based on distance from center
+      
       const pushStrength = repelStrength * force;
       p.speedX += Math.cos(angle) * pushStrength;
       p.speedY += Math.sin(angle) * pushStrength;
       
-      // Increased rotation based on push force
+      
       p.rotationSpeed += (Math.random() - 0.5) * 5 * force;
       
-      // Add energy to particle for visual effect
+      
       p.energy = Math.min(1.0, p.energy + force);
       
-      // Clear trail for more dynamic visual effect
+      
       p.trail = [];
     }
   });

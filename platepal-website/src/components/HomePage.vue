@@ -2,16 +2,16 @@
 import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-// Use the i18n composition API
+
 const { t, locale } = useI18n();
 
 const props = defineProps({
   darkMode: Boolean
 });
 
-// Calculate age based on birthdate
+
 const calculateAge = () => {
-  const birthdate = new Date(2003, 6, 9); // month is 0-indexed, so 6 = July
+  const birthdate = new Date(2003, 6, 9); 
   const today = new Date();
   let age = today.getFullYear() - birthdate.getFullYear();
   const monthDifference = today.getMonth() - birthdate.getMonth();
@@ -25,9 +25,9 @@ const calculateAge = () => {
 
 const age = calculateAge();
 
-// Calculate years of gym training
+
 const calculateGymYears = () => {
-  const startDate = new Date(2022, 6, 1); // July 2022
+  const startDate = new Date(2022, 6, 1); 
   const today = new Date();
   
   let years = today.getFullYear() - startDate.getFullYear();
@@ -42,7 +42,7 @@ const calculateGymYears = () => {
 
 const gymYears = calculateGymYears();
 
-// Format gym years text based on current locale and years value
+
 const gymYearsText = computed(() => {
   if (gymYears === 0) {
     return t('home.about.year');
@@ -51,10 +51,10 @@ const gymYearsText = computed(() => {
   }
 });
 
-// Determine if bachelors is finished or will be finished
+
 const bachelorStatus = computed(() => {
   const today = new Date();
-  const finishDate = new Date(2025, 9, 1); // October 1st 2025
+  const finishDate = new Date(2025, 9, 1); 
   
   if (today >= finishDate) {
     const formattedDate = new Intl.DateTimeFormat(locale.value, { 
@@ -68,11 +68,11 @@ const bachelorStatus = computed(() => {
   }
 });
 
-// Animation related state
+
 const animated = ref(false);
 const skillsVisible = ref(false);
 
-// Skills list - now using translation keys
+
 const skills = [
 { name: 'home.skills.vue', icon: 'fab fa-solid fa-vuejs', color: 'text-green-500' },
 { name: 'home.skills.flutter', icon: 'fa-solid fa-mobile-alt', color: 'text-blue-500' },
@@ -88,7 +88,7 @@ const skills = [
 { name: 'home.skills.discordbots', icon: 'fab fa-discord', color: 'text-indigo-500' },
 ];
 
-// Social media links
+
 const socialLinks = [
   { name: 'home.social.steam', icon: 'fab fa-steam', color: 'text-gray-500', url: 'https://steamcommunity.com/id/dergottderherr/' },
   { name: 'home.social.discord', icon: 'fab fa-discord', color: 'text-indigo-500', url: 'https://discordapp.com/users/mrlappes' },

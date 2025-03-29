@@ -14,23 +14,28 @@ export default {
                 "1000": "1000 Partikel",
                 "1500": "1500 Partikel",
                 "2000": "2000 Partikel (Wild)"
+            },
+            "touchMode": "Touch-Modus",
+            "touchModeToggle": {
+                "enable": "Touch-Modus aktivieren",
+                "disable": "Touch-Modus deaktivieren"
             }
         },
         "home": {
             "title": "Mike Busam",
             "subtitle": "Game - Website - App Dev",
-            "subtitle2": "Coden macht Spaß! | Fitness-Junkie",
+            "subtitle2": "Einfach machen | Average Fitness Enjoyer",
             "buttons": {
-                "github": "Mein GitHub",
-                "skills": "Skillz"
+                "github": "GitHub",
+                "skills": "Mein Toolset"
             },
             "mediaAttr": {
                 "generated": "Bild mit flux-dev - mein Gesicht",
                 "video": "Video mit OpenAI Sora erstellt"
             },
             "social": {
-                "title": "Hier bin ich online",
-                "note": "Ps. Ich bin auf Twitch, YouTube und Instagram sehr, sehr inaktiv.",
+                "title": "Soziale Dinge, lieber übers Netz",
+                "note": "Ps. Ich bin auf Twitch, YouTube, Itch und Instagram sehr, sehr inaktiv.",
                 "instagram": "Instagram",
                 "twitch": "Twitch",
                 "discord": "Discord",
@@ -40,41 +45,41 @@ export default {
             },
             "about": {
                 "title": "Über Mich",
-                "age": "Moin! Ich bin {age} Jahre alt (seit dem 09.07.2003 auf diesem Planeten) und {status}.",
-                "location": "Komme ursprünglich aus dem schönen Baden und arbeite jetzt in Bayern - Servus!",
-                "gym": "Seit {years} (Juli 2022) pumpe ich natural 3-5 mal die Woche im Gym und achte auf gesunden Lifestyle. Gains sind Leben!",
-                "developer": "Als Hobby-Entwickler mit Herzblut bastle ich an diversen Projekten und sauge ständig neues Wissen in allen möglichen Tech-Bereichen auf.",
+                "age": "Ich bin {age} Jahre alt (am 09.07.2003 geboren) und {status}.",
+                "location": "Komme ursprünglich aus Baden und arbeite jetzt in München.",
+                "gym": "Seit {years} (Juli 2022) gehe ich 3-5 mal die Woche im Gym und achte auf maximale Gains.",
+                "developer": "Als Hobby-Dev programmiere ich auf was ich Lust habe, wie diese Webseite. Manchmal programmiere ich auch sinnvolles.",
                 "year": "einem Jahr",
                 "years": "{count} Jahren",
                 "bachelor": {
-                    "inProgress": "kämpfe mich aktuell durch meinen Informatik-Bachelor an der Provadis Hochschule",
-                    "completed": "hab im {date} meinen Informatik-Bachelor an der Provadis Hochschule in die Tasche gesteckt"
+                    "inProgress": "gehe aktuell entspannt durch meinen Informatik-Bachelor an der Provadis Hochschule",
+                    "completed": "habe im {date} meinen Informatik-Bachelor an der Provadis Hochschule gemacht"
                 }
             },
             "skills": {
-                "title": "Mein Können und meine Hobbies",
-                "vue": "Websites mit Vue zum Leben erwecken",
-                "flutter": "App-Magie mit Flutter",
-                "godot": "Spiele-Entwicklung mit Godot",
-                "unity": "VR- und XR-Welten in Unity erschaffen",
-                "ai": "KI-Bildgenerierung (Maschinen, die Kunst machen!)",
-                "arch": "Arch Linux mit KDE (weil ich's kann)",
-                "design": "Design-Künste in Affinity Designer/Photo",
-                "pixel": "Pixel Art in Libresprite (Nostalgie pur!)",
-                "editor": "VSCode und Vim (echte Entwickler benutzen Vim, oder?)",
-                "dark": "Dark Mode für alles (Augen sagen Danke)",
-                "backend": "Backend-Zauberei mit FastAPI in Python",
-                "discordbots": "Discord-Bots bauen in JS und Python"
+                "title": "Mein Toolset",
+                "vue": "Vue.js ist toll",
+                "flutter": "Flutter ist auch toll",
+                "godot": "Godot ftw",
+                "unity": "Go-To für VR und XR",
+                "ai": "KI-Bildgenerierung (Flux, Stable Diffusion, custom LoRas)",
+                "arch": "Arch Linux mit KDE (btw)",
+                "design": "Designs in Affinity Designer/Photo",
+                "pixel": "Pixel Art in Libresprite",
+                "editor": "VSCode und Vim (VSCode für große Projekte, Vim (NVim) für alles andere)",
+                "dark": "Dark Mode enjoyer",
+                "backend": "Meist Python mit FastAPI",
+                "discordbots": "Normaler trash-bot coder (JS und Python)"
             },
             "project": {
                 "title": "PlatePal",
-                "description": "Zeig der Welt, was auf deinem Teller landet und finde Gleichgesinnte zum gemeinsamen Schlemmen! Chatte mit ihnen, schnapp dir deine Freunde und gründe kulinarische Geheimgesellschaften - nur für deine Liebsten.",
+                "description": "Veröffentliche, was du isst und lade andere ein, mit dir zu essen. Chatte mit ihnen, lade deine Freunde ein und erstelle Gruppen, denen nur deine Freunde beitreten können.",
                 "tags": {
                     "flutter": "Flutter",
                     "social": "Social App",
-                    "coming": "Kommt bald"
+                    "coming": "Kommt?"
                 },
-                "soon": "Bald am Start!"
+                "soon": "(vielleicht) Bald verfügbar!"
             }
         },
         "footer": {

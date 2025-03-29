@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n';
 import HomePage from './components/HomePage.vue';
 import AnimatedBackground from './components/AnimatedBackground.vue';
 
-// Use the i18n composition API
+
 const { t, locale } = useI18n();
 
 const darkMode = ref(localStorage.getItem('darkMode') === 'true' || window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -15,10 +15,23 @@ const mobileMenuOpen = ref(false);
 const languages = [
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
   { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'cs', name: 'Čeština', flag: '🇨🇿' }
+  { code: 'cs', name: 'Čeština', flag: '🇨🇿' },
+  { code: 'jp', name: '日本語', flag: '🇯🇵' },
 ];
 
 const langDropdownOpen = ref(false);
+
+
+const touchMode = ref(localStorage.getItem('touchMode') === 'true' || false);
+
+
+
+const isTouchDevice = ref(false);
+
+
+onMounted(() => {
+  isTouchDevice.value = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+});
 
 watch(darkMode, (newValue) => {
   localStorage.setItem('darkMode', newValue);
@@ -40,6 +53,11 @@ watch(maxParticles, (newValue) => {
 watch(locale, (newValue) => {
   localStorage.setItem('locale', newValue);
   document.querySelector('html').setAttribute('lang', newValue);
+});
+
+
+watch(touchMode, (newValue) => {
+  localStorage.setItem('touchMode', newValue);
 });
 
 onMounted(() => {
@@ -74,19 +92,19 @@ const toggleLangDropdown = () => {
 };
 
 const toggleMobileMenu = (event) => {
-  // Stop event propagation to prevent immediate closing
+  
   if (event) {
     event.stopPropagation();
   }
   mobileMenuOpen.value = !mobileMenuOpen.value;
-  // Close language dropdown if it's open
+  
   if (langDropdownOpen.value) {
     langDropdownOpen.value = false;
   }
 };
 
 const handleClickOutside = (event) => {
-  // Don't close the mobile menu if clicking the menu button
+  
   if (event.target.closest('.mobile-menu-button')) {
     return;
   }
@@ -103,6 +121,11 @@ const handleClickOutside = (event) => {
 onMounted(() => {
   document.addEventListener('click', handleClickOutside);
 });
+
+
+const toggleTouchMode = () => {
+  touchMode.value = !touchMode.value;
+};
 </script>
 
 <template>
@@ -112,6 +135,7 @@ onMounted(() => {
       :darkMode="darkMode" 
       :showParticles="showParticles"
       :maxParticles="maxParticles"
+      :touchMode="touchMode"
     />
     
     <header class="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-md transition-all duration-300 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm">
@@ -269,6 +293,23 @@ onMounted(() => {
               <span>1000</span>
               <span>2000</span>
             </div>
+          </div>
+          
+          <!-- Touch Mode Toggle in Mobile Menu - Only show on touch-capable devices -->
+          <div 
+            v-if="isTouchDevice" 
+            class="flex justify-between items-center"
+          >
+            <span class="text-gray-700 dark:text-gray-300 font-medium">Touch Mode</span>
+            <button 
+              @click="toggleTouchMode" 
+              class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-600 transition-colors duration-200"
+            >
+              <span
+                :class="touchMode ? 'translate-x-6 bg-[#e384c7]' : 'translate-x-1 bg-white'"
+                class="inline-block h-4 w-4 transform rounded-full transition-transform duration-200"
+              />
+            </button>
           </div>
           
           <!-- Language Selector in Mobile Menu -->
