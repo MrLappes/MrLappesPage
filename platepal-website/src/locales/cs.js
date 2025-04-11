@@ -47,7 +47,7 @@ export default {
         "title": "O mně",
         "age": "Je mi {age} let (narozen 09.07.2003) a {status}.",
         "location": "Původně z Badenu, teď pracuji v Mnichově.",
-        "gym": "Od {years} (červenec 2022) chodím 3-5× týdně do gymu a zaměřuji se na maximální gainz.",
+        "gym": "Od {years} (červenec 2021) chodím 3-5× týdně do gymu a zaměřuji se na maximální gainz.",
         "developer": "Jako hobby-dev programuji, co mě baví, jako tenhle web. Občas programuji i užitečné věci.",
         "year": "jednoho roku",
         "years": "{count} let",

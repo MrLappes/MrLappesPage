@@ -27,7 +27,7 @@ const age = calculateAge();
 
 
 const calculateGymYears = () => {
-  const startDate = new Date(2022, 6, 1); 
+  const startDate = new Date(2021, 6, 1); 
   const today = new Date();
   
   let years = today.getFullYear() - startDate.getFullYear();

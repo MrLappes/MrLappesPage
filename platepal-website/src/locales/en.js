@@ -47,7 +47,7 @@ export default {
         "title": "About Me",
         "age": "I'm {age} years old (born on July 9, 2003) and {status}.",
         "location": "Originally from Baden, now working in Munich.",
-        "gym": "Since {years} (July 2022), I hit the gym 3-5 times a week, chasing those maximum gains.",
+        "gym": "Since {years} (July 2021), I hit the gym 3-5 times a week, chasing those maximum gains.",
         "developer": "As a hobby dev, I code whatever I feel like, including this website. Sometimes I even make useful stuff.",
         "year": "one year",
         "years": "{count} years",
