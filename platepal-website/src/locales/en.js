@@ -80,6 +80,16 @@ export default {
                 "coming": "Coming?"
             },
             "soon": "(maybe) Coming Soon!"
+        },
+        "trackerProject": {
+            "title": "PlatePal Tracker",
+            "description": "An open-source calorie tracking app that helps you monitor your food intake and nutritional habits. Take photos of your meals and get AI-powered nutritional analysis instantly.",
+            "tags": {
+                "openSource": "Open Source",
+                "calorie": "Calorie Tracker",
+                "react": "React Native",
+            },
+            "privacyButton": "Privacy Policy"
         }
     },
     "footer": {

@@ -77,9 +77,19 @@ export default {
             "tags": {
                 "flutter": "Flutter",
                 "social": "Social App",
-                "coming": "Přichází?"
+                "coming": "Přichází?",
             },
             "soon": "(možná) Brzy dostupné!"
+        },
+        "trackerProject": {
+            "title": "PlatePal Tracker",
+            "description": "Open-source aplikace pro sledování kalorií, která vám pomůže monitorovat příjem potravy a stravovací návyky. Vyfoťte své jídlo a získejte okamžitou analýzu výživových hodnot pomocí AI.",
+            "tags": {
+                "openSource": "Open Source",
+                "calorie": "Sledování kalorií",
+                "react": "React Native",
+            },
+            "privacyButton": "Zásady ochrany osobních údajů"
         }
     },
     "footer": {

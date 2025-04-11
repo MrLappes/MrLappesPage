@@ -77,9 +77,19 @@ export default {
             "tags": {
                 "flutter": "Flutter",
                 "social": "Social App",
-                "coming": "Kommt?"
+                "coming": "Kommt?",
             },
             "soon": "(vielleicht) Bald verfügbar!"
+        },
+        "trackerProject": {
+            "title": "PlatePal Tracker",
+            "description": "Eine Open-Source-App zur Kalorienerfassung, die dir hilft, deine Nahrungsaufnahme und Ernährungsgewohnheiten zu überwachen. Mache Fotos von deinen Mahlzeiten und erhalte sofort KI-gestützte Ernährungsanalysen.",
+            "tags": {
+                "openSource": "Open Source",
+                "calorie": "Kalorien-Tracker",
+                "react": "React Native",
+            },
+            "privacyButton": "Datenschutzerklärung"
         }
     },
     "footer": {

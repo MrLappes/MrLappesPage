@@ -75,6 +75,16 @@ export default {
                 "coming": "近日公開"
             },
             "soon": "もうすぐあなたのスマートフォンに！"
+        },
+        "trackerProject": {
+            "title": "PlatePal Tracker",
+            "description": "オープンソースのカロリー追跡アプリで、食事摂取量と栄養習慣を監視するのに役立ちます。食事の写真を撮影し、AI動力の栄養分析を瞬時に取得しましょう。",
+            "tags": {
+                "openSource": "オープンソース",
+                "calorie": "カロリートラッカー",
+                "react": "React Native",
+            },
+            "privacyButton": "プライバシーポリシー"
         }
     },
     "footer": {
