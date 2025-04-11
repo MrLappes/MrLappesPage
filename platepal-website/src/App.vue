@@ -1,9 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import HomePage from './components/HomePage.vue';
 import AnimatedBackground from './components/AnimatedBackground.vue';
-
 
 const { t, locale } = useI18n();
 
@@ -21,13 +19,9 @@ const languages = [
 
 const langDropdownOpen = ref(false);
 
-
 const touchMode = ref(localStorage.getItem('touchMode') === 'true' || false);
 
-
-
 const isTouchDevice = ref(false);
-
 
 onMounted(() => {
   isTouchDevice.value = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -55,7 +49,6 @@ watch(locale, (newValue) => {
   document.querySelector('html').setAttribute('lang', newValue);
 });
 
-
 watch(touchMode, (newValue) => {
   localStorage.setItem('touchMode', newValue);
 });
@@ -66,7 +59,7 @@ onMounted(() => {
   } else {
     document.documentElement.classList.remove('dark');
   }
-    document.querySelector('html').setAttribute('lang', locale.value);
+  document.querySelector('html').setAttribute('lang', locale.value);
 });
 
 const toggleDarkMode = () => {
@@ -92,27 +85,25 @@ const toggleLangDropdown = () => {
 };
 
 const toggleMobileMenu = (event) => {
-  
   if (event) {
     event.stopPropagation();
   }
   mobileMenuOpen.value = !mobileMenuOpen.value;
-  
+
   if (langDropdownOpen.value) {
     langDropdownOpen.value = false;
   }
 };
 
 const handleClickOutside = (event) => {
-  
   if (event.target.closest('.mobile-menu-button')) {
     return;
   }
-  
+
   if (langDropdownOpen.value && !event.target.closest('.lang-dropdown')) {
     langDropdownOpen.value = false;
   }
-  
+
   if (mobileMenuOpen.value && !event.target.closest('.mobile-menu')) {
     mobileMenuOpen.value = false;
   }
@@ -121,7 +112,6 @@ const handleClickOutside = (event) => {
 onMounted(() => {
   document.addEventListener('click', handleClickOutside);
 });
-
 
 const toggleTouchMode = () => {
   touchMode.value = !touchMode.value;
@@ -343,12 +333,24 @@ const toggleTouchMode = () => {
     </header>
     
     <main class="container mx-auto px-4 py-8 relative z-10">
-      <HomePage :darkMode="darkMode" />
+      <router-view v-slot="{ Component }">
+        <transition name="page" mode="out-in">
+          <component :is="Component" :darkMode="darkMode" />
+        </transition>
+      </router-view>
     </main>
     
     <footer class="py-6 bg-white dark:bg-gray-800 shadow-inner transition-colors duration-300 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm relative z-10">
-      <div class="container mx-auto px-4 text-center text-gray-600 dark:text-gray-300">
-        <p>{{ t('footer.copyright', { year: new Date().getFullYear() }) }}</p>
+      <div class="container mx-auto px-4 text-center">
+        <div class="flex flex-wrap justify-center items-center gap-4 mb-3">
+          <router-link 
+            to="/privacy" 
+            class="text-gray-600 hover:text-[#e384c7] dark:text-gray-300 dark:hover:text-[#e384c7] transition-colors duration-200"
+          >
+            {{ t('footer.privacy', 'Privacy Policy') }}
+          </router-link>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300">{{ t('footer.copyright', { year: new Date().getFullYear() }) }}</p>
       </div>
     </footer>
   </div>

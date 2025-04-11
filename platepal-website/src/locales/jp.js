@@ -78,7 +78,44 @@ export default {
         }
     },
     "footer": {
-        "copyright": "© {year} Mike Busam | PlatePal"
+        "privacy": "プライバシーポリシー",
+        "copyright": "© {year} PlatePal. 全ての権利を保有しています。"
+    },
+    "privacy": {
+        "title": "PlatePal Trackerのプライバシーポリシー",
+        "effective": "施行日: 2025年4月11日",
+        "intro": {
+            "title": "はじめに",
+            "content": "PlatePal Trackerへようこそ。私たちはあなたのプライバシーを尊重し、個人情報の保護に努めています。このプライバシーポリシーは、当アプリケーション利用時のデータ取り扱い方法について説明します。"
+        },
+        "data": {
+            "title": "収集するデータとその利用方法",
+            "camera": {
+                "title": "カメラのアクセス",
+                "content": "PlatePal Trackerはデバイスのカメラへのアクセス許可を要求します。このアクセスは、食品の写真を撮影して追跡目的のみに使用されます。私たちのアプリを通じてキャプチャされたすべての画像は、最初にデバイスにローカルに保存されます。"
+            },
+            "processing": {
+                "title": "画像処理",
+                "intro": "アプリ内のチャット会話に画像を追加する際：",
+                "account": "アカウントモードでは：画像は処理と分析のためにOpenAIのサーバーに送信されることがあります",
+                "custom": "カスタムAPIモードでは：画像は選択したサードパーティのAPIプロバイダーに送信されることがあります",
+                "purpose": "これらの送信はアプリの食品認識と栄養分析機能のために必要です。"
+            },
+            "local": {
+                "title": "ローカルデータの保存",
+                "intro": "PlatePal Trackerはデバイスに以下の情報をローカルに保存します：",
+                "images": "食品の画像",
+                "nutrition": "栄養情報",
+                "logs": "食事ログとトラッキングデータ",
+                "prefs": "ユーザー設定",
+                "storage": "このデータは私たちのサーバーに送信されず、チャット機能を通じて特に共有しない限り、デバイス上にのみ保存されます。"
+            }
+        },
+        "contact": {
+            "title": "お問い合わせ",
+            "content": "このプライバシーポリシーまたは当社のデータ取り扱いについて質問がある場合は、support[at]platepal.comまでお問い合わせください。"
+        },
+        "lastUpdated": "最終更新日：2025年4月11日"
     },
     "animations": {
         "particleCount": "パーティクル：{current}/{max}",
