@@ -1,0 +1,31 @@
+# PlatePal Recipe Wiki backend (venv runtime).
+#
+# This unit runs the FastAPI backend directly from the project venv, bound to
+# loopback 127.0.0.1:8091 (nginx is the only entry point). It is an alternative
+# to the Docker deployment (docker-compose.yml) for hosts where Docker is not
+# available — only ONE of them should run at a time since both bind :8091.
+#
+# Install:
+#   sudo cp deploy/systemd/platepal-recipe-backend.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now platepal-recipe-backend
+
+[Unit]
+Description=PlatePal Recipe Wiki backend (FastAPI/uvicorn)
+After=network.target
+
+[Service]
+Type=simple
+User=lappy
+Group=lappy
+WorkingDirectory=/home/lappy/all_projects/platepal-dev/recipe-backend
+EnvironmentFile=/home/lappy/all_projects/platepal-dev/recipe-backend/.env
+Environment=DATABASE_PATH=/home/lappy/all_projects/platepal-dev/recipe-backend/data/recipes.db
+ExecStart=/home/lappy/all_projects/platepal-dev/recipe-backend/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8091 --proxy-headers --forwarded-allow-ips *
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
