@@ -19,7 +19,19 @@ export default {
             "servings": "{count} porcí",
             "perServing": "porce",
             "ingredients": "Suroviny",
-            "instructions": "Postup"
+            "instructions": "Postup",
+            "export": {
+                "button": "Exportovat do PlatePal Tracker",
+                "hint": "P\u0159idat tento recept jako pokrm do aplikace PlatePal Tracker.",
+                "perServing": "Na porci",
+                "wholeRecipe": "Cel\u00fd recept",
+                "copy": "Kop\u00edrovat JSON",
+                "download": "St\u00e1hnout soubor",
+                "copied": "Zkop\u00edrov\u00e1no do schr\u00e1nky",
+                "downloaded": "Soubor sta\u017een",
+                "failed": "Export se nezda\u0159il",
+                "usage": "V aplikaci Tracker: vlo\u017ete JSON v Nastaven\u00ed \u2192 Import dat \u2192 Import z JSON, nebo otev\u0159ete sta\u017een\u00fd soubor pomoc\u00ed Vybrat soubor."
+            }
         },
         "ingredient": {
             "back": "Zpět na suroviny",

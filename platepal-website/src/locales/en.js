@@ -19,7 +19,19 @@ export default {
             "servings": "{count} servings",
             "perServing": "serving",
             "ingredients": "Ingredients",
-            "instructions": "Instructions"
+            "instructions": "Instructions",
+            "export": {
+                "button": "Export to PlatePal Tracker",
+                "hint": "Add this recipe to the PlatePal Tracker app as a dish.",
+                "perServing": "Per serving",
+                "wholeRecipe": "Whole recipe",
+                "copy": "Copy JSON",
+                "download": "Download file",
+                "copied": "Copied to clipboard",
+                "downloaded": "File downloaded",
+                "failed": "Export failed",
+                "usage": "In the Tracker app: paste the JSON under Settings \u2192 Import Data \u2192 Import from JSON, or open the downloaded file with Select File."
+            }
         },
         "ingredient": {
             "back": "Back to ingredients",

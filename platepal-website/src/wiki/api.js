@@ -98,11 +98,16 @@ export const api = {
   listRecipes: (locale, q) =>
     request(`/recipes?locale=${encodeURIComponent(locale)}${q ? `&q=${encodeURIComponent(q)}` : ''}`),
   getRecipe: (slug, locale) => request(`/recipes/${encodeURIComponent(slug)}?locale=${encodeURIComponent(locale)}`),
+  exportRecipe: (slug, locale, portion = 'serving') =>
+    request(
+      `/recipes/${encodeURIComponent(slug)}/export?locale=${encodeURIComponent(locale)}&portion=${encodeURIComponent(portion)}`,
+    ),
   listIngredients: (locale, q) =>
     request(`/ingredients?locale=${encodeURIComponent(locale)}${q ? `&q=${encodeURIComponent(q)}` : ''}`),
   getIngredient: (slug, locale) =>
     request(`/ingredients/${encodeURIComponent(slug)}?locale=${encodeURIComponent(locale)}`),
   imageUrl: (id) => (id ? `${BASE}/images/${id}` : null),
+  absoluteImageUrl: (id) => (id ? `${window.location.origin}${BASE}/images/${id}` : null),
 
   // Auth
   login: async (username, password) => {

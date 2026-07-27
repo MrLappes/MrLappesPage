@@ -29,6 +29,56 @@ async function load() {
 watch(locale, load);
 watch(() => props.slug, load);
 onMounted(load);
+
+// --- PlatePal Tracker export ---------------------------------------------
+const exportOpen = ref(false);
+const exportPortion = ref('serving');
+const exportMsg = ref('');
+let exportMsgTimer;
+
+function flashExport(msg) {
+  exportMsg.value = msg;
+  clearTimeout(exportMsgTimer);
+  exportMsgTimer = setTimeout(() => {
+    exportMsg.value = '';
+  }, 2500);
+}
+
+async function fetchDish() {
+  const dish = await api.exportRecipe(props.slug, locale.value, exportPortion.value);
+  if (recipe.value?.image_id) dish.imageUri = api.absoluteImageUrl(recipe.value.image_id);
+  return dish;
+}
+
+async function copyForTracker() {
+  try {
+    const dish = await fetchDish();
+    await navigator.clipboard.writeText(JSON.stringify(dish, null, 2));
+    flashExport(t('wiki.recipe.export.copied'));
+  } catch {
+    flashExport(t('wiki.recipe.export.failed'));
+  }
+}
+
+async function downloadForTracker() {
+  try {
+    const dish = await fetchDish();
+    const payload = { dishes: [dish], dishLogs: [] };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `platepal_${props.slug}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    flashExport(t('wiki.recipe.export.downloaded'));
+  } catch {
+    flashExport(t('wiki.recipe.export.failed'));
+  }
+}
+
 </script>
 
 <template>
@@ -70,6 +120,69 @@ onMounted(load);
         <span class="px-3 py-1.5 rounded-full bg-gray-100 dark:bg-dark-elevated text-gray-600 dark:text-gray-300 font-medium">
           <i class="fas fa-fire mr-1"></i>{{ recipe.nutrition.per_serving.kcal }} kcal / {{ t('wiki.recipe.perServing') }}
         </span>
+      </div>
+
+      <div class="mb-8">
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-sm font-semibold shadow-sm hover:bg-secondary transition"
+          @click="exportOpen = !exportOpen"
+        >
+          <i class="fas fa-mobile-screen-button"></i>{{ t('wiki.recipe.export.button') }}
+          <i class="fas fa-chevron-down text-xs transition-transform" :class="{ 'rotate-180': exportOpen }"></i>
+        </button>
+
+        <div
+          v-if="exportOpen"
+          class="mt-3 p-4 rounded-2xl bg-white dark:bg-dark-surface shadow-sm border border-gray-100 dark:border-dark-elevated max-w-lg"
+        >
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">{{ t('wiki.recipe.export.hint') }}</p>
+
+          <div class="flex gap-2 mb-4">
+            <button
+              type="button"
+              class="flex-1 px-3 py-1.5 rounded-lg text-sm font-medium border transition"
+              :class="exportPortion === 'serving'
+                ? 'bg-primary-light text-secondary dark:text-primary border-primary'
+                : 'border-gray-200 dark:border-dark-elevated text-gray-500'"
+              @click="exportPortion = 'serving'"
+            >
+              {{ t('wiki.recipe.export.perServing') }}
+            </button>
+            <button
+              type="button"
+              class="flex-1 px-3 py-1.5 rounded-lg text-sm font-medium border transition"
+              :class="exportPortion === 'whole'
+                ? 'bg-primary-light text-secondary dark:text-primary border-primary'
+                : 'border-gray-200 dark:border-dark-elevated text-gray-500'"
+              @click="exportPortion = 'whole'"
+            >
+              {{ t('wiki.recipe.export.wholeRecipe') }}
+            </button>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 dark:bg-dark-elevated text-gray-700 dark:text-gray-200 text-sm font-medium hover:bg-gray-200 dark:hover:bg-dark-bg transition"
+              @click="copyForTracker"
+            >
+              <i class="fas fa-copy"></i>{{ t('wiki.recipe.export.copy') }}
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 dark:bg-dark-elevated text-gray-700 dark:text-gray-200 text-sm font-medium hover:bg-gray-200 dark:hover:bg-dark-bg transition"
+              @click="downloadForTracker"
+            >
+              <i class="fas fa-download"></i>{{ t('wiki.recipe.export.download') }}
+            </button>
+            <span v-if="exportMsg" class="inline-flex items-center gap-1 text-sm text-green-600 dark:text-green-400">
+              <i class="fas fa-check"></i>{{ exportMsg }}
+            </span>
+          </div>
+
+          <p class="text-xs text-gray-400 mt-3">{{ t('wiki.recipe.export.usage') }}</p>
+        </div>
       </div>
 
       <div class="grid md:grid-cols-5 gap-8">

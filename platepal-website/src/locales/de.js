@@ -19,7 +19,19 @@ export default {
             "servings": "{count} Portionen",
             "perServing": "Portion",
             "ingredients": "Zutaten",
-            "instructions": "Zubereitung"
+            "instructions": "Zubereitung",
+            "export": {
+                "button": "Zu PlatePal Tracker exportieren",
+                "hint": "Dieses Rezept als Gericht in die PlatePal Tracker App \u00fcbernehmen.",
+                "perServing": "Pro Portion",
+                "wholeRecipe": "Ganzes Rezept",
+                "copy": "JSON kopieren",
+                "download": "Datei herunterladen",
+                "copied": "In Zwischenablage kopiert",
+                "downloaded": "Datei heruntergeladen",
+                "failed": "Export fehlgeschlagen",
+                "usage": "In der Tracker App: JSON unter Einstellungen \u2192 Daten importieren \u2192 Aus JSON importieren einf\u00fcgen oder die heruntergeladene Datei mit Datei ausw\u00e4hlen \u00f6ffnen."
+            }
         },
         "ingredient": {
             "back": "Zurück zu den Zutaten",

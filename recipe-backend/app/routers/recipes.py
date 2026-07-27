@@ -1,4 +1,7 @@
 """Recipe wiki: public read (localised, searchable, auto nutrition) + admin CRUD."""
+import uuid
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 from ..database import db_cursor
@@ -8,6 +11,10 @@ from ..schemas import RecipeIn
 from ..security import get_current_admin
 
 router = APIRouter(tags=["recipes"])
+
+# Stable namespace so re-exporting a recipe yields the same dish id, letting the
+# PlatePal Tracker app update an existing dish instead of creating duplicates.
+_TRACKER_NS = uuid.uuid5(uuid.NAMESPACE_URL, "https://plate-pal.de/wiki/tracker-export")
 
 
 def _validate_ingredient_ids(cur, ingredients) -> None:
@@ -86,6 +93,101 @@ async def get_recipe(slug: str, locale: str | None = Query(default=None)):
         "instructions_html": row["instructions_html"], "servings": row["servings"],
         "image_id": row["image_id"], "ingredients": ingredients, "nutrition": nutrition,
     }
+
+
+@router.get("/recipes/{slug}/export")
+async def export_recipe(
+    slug: str,
+    locale: str | None = Query(default=None),
+    portion: str = Query(default="serving"),
+):
+    """Export a recipe as a PlatePal Tracker compatible dish.
+
+    The tracker's "Import from JSON" screen accepts a bare dish object; the file
+    import accepts ``{"dishes": [...]}``. This returns the bare dish so the
+    frontend can offer both. ``portion=serving`` (default) scales everything to a
+    single serving; ``portion=whole`` exports the full recipe.
+    """
+    loc = pick_locale(locale)
+    per_serving = portion != "whole"
+    with db_cursor() as cur:
+        cur.execute(
+            "SELECT r.id, r.slug, r.servings, r.image_id, t.title, t.summary "
+            "FROM recipes r JOIN recipe_translations t ON t.recipe_id = r.id AND t.locale = ? "
+            "WHERE r.slug = ? AND r.published = 1",
+            (loc, slug),
+        )
+        row = cur.fetchone()
+        if row is None:
+            raise HTTPException(status_code=404, detail="Recipe not found")
+
+        servings = row["servings"] or 1
+        divisor = servings if per_serving else 1
+
+        cur.execute(
+            "SELECT ri.grams, i.kcal, i.protein, i.carbs, i.fat, i.fiber, i.sugar, i.salt, "
+            "it.name FROM recipe_ingredients ri "
+            "JOIN ingredients i ON i.id = ri.ingredient_id "
+            "JOIN ingredient_translations it ON it.ingredient_id = i.id AND it.locale = ? "
+            "WHERE ri.recipe_id = ? ORDER BY ri.sort_order, ri.id",
+            (loc, row["id"]),
+        )
+
+        ingredients = []
+        totals = {"kcal": 0.0, "protein": 0.0, "carbs": 0.0, "fat": 0.0,
+                  "fiber": 0.0, "sugar": 0.0, "salt": 0.0}
+        for ing in cur.fetchall():
+            grams = ing["grams"] / divisor
+            factor = grams / 100.0
+            fiber_per_100 = round(ing["fiber"], 1) if ing["fiber"] is not None else None
+            ingredients.append({
+                "name": ing["name"],
+                "quantity": round(grams, 1),
+                "unit": "g",
+                "caloriesPer100": round(ing["kcal"] or 0, 1),
+                "proteinPer100": round(ing["protein"] or 0, 1),
+                "carbsPer100": round(ing["carbs"] or 0, 1),
+                "fatPer100": round(ing["fat"] or 0, 1),
+                "fiberPer100": fiber_per_100,
+                "calories": round((ing["kcal"] or 0) * factor, 1),
+                "protein": round((ing["protein"] or 0) * factor, 1),
+                "carbs": round((ing["carbs"] or 0) * factor, 1),
+                "fat": round((ing["fat"] or 0) * factor, 1),
+                "fiber": round(ing["fiber"] * factor, 1) if ing["fiber"] is not None else None,
+            })
+            for key in totals:
+                value = ing[key]
+                if value is not None:
+                    totals[key] += value * factor
+
+        totals = {k: round(v, 1) for k, v in totals.items()}
+        # Recipe stores salt (g); the tracker's dish.sodium is milligrams.
+        sodium_mg = round(totals["salt"] / 2.5 * 1000, 1) if totals["salt"] else None
+        now = datetime.now(timezone.utc).isoformat()
+        dish_id = str(uuid.uuid5(_TRACKER_NS, f"{row['slug']}:{loc}:{portion}"))
+
+        dish = {
+            "id": dish_id,
+            "name": row["title"],
+            "description": row["summary"] or None,
+            "imageUri": None,
+            "calories": totals["kcal"],
+            "protein": totals["protein"],
+            "carbs": totals["carbs"],
+            "fat": totals["fat"],
+            "fiber": totals["fiber"] or None,
+            "sodium": sodium_mg,
+            "sugar": totals["sugar"] or None,
+            "cholesterol": None,
+            "isFavorite": False,
+            "tags": ["PlatePal Wiki"],
+            "defaultMealType": None,
+            "createdAt": now,
+            "updatedAt": now,
+            "ingredients": ingredients,
+        }
+
+    return dish
 
 
 @router.get("/admin/recipes")

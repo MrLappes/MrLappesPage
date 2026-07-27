@@ -19,7 +19,19 @@ export default {
             "servings": "{count}人分",
             "perServing": "1人分",
             "ingredients": "材料",
-            "instructions": "作り方"
+            "instructions": "作り方",
+            "export": {
+                "button": "PlatePal Tracker にエクスポート",
+                "hint": "このレシピを料理として PlatePal Tracker アプリに追加します。",
+                "perServing": "1人分",
+                "wholeRecipe": "レシピ全体",
+                "copy": "JSON をコピー",
+                "download": "ファイルをダウンロード",
+                "copied": "クリップボードにコピーしました",
+                "downloaded": "ファイルをダウンロードしました",
+                "failed": "エクスポートに失敗しました",
+                "usage": "Tracker アプリで、設定 → データのインポート → JSON からインポート に貼り付けるか、ダウンロードしたファイルをファイル選択で開いてください。"
+            }
         },
         "ingredient": {
             "back": "食材一覧へ戻る",
