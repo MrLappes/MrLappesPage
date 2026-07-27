@@ -1,6 +1,6 @@
 // Reactive admin auth store for the recipe wiki.
 import { reactive } from 'vue';
-import { api, setAccessToken } from './api.js';
+import { api, setAccessToken, setChallengeToken } from './api.js';
 
 export const auth = reactive({
   isAuthenticated: false,
@@ -25,6 +25,7 @@ export async function initAuth() {
 
 export function completeLogin(session) {
   setAccessToken(session.access_token);
+  setChallengeToken(null);
   auth.isAuthenticated = true;
   auth.username = session.username;
 }
@@ -36,6 +37,7 @@ export async function logout() {
     /* ignore */
   }
   setAccessToken(null);
+  setChallengeToken(null);
   auth.isAuthenticated = false;
   auth.username = null;
 }

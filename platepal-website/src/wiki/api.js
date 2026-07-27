@@ -5,6 +5,7 @@
 const BASE = '/wiki-api';
 
 let accessToken = null;
+let challengeToken = null;
 let refreshPromise = null;
 
 export function setAccessToken(token) {
@@ -15,10 +16,18 @@ export function getAccessToken() {
   return accessToken;
 }
 
-function buildHeaders(extra, hasBody) {
+// The challenge token proves the password step passed and authorises the
+// first-login setup steps (password change, TOTP setup) and the 2FA step.
+// It lives only in memory and is cleared once a full session is issued.
+export function setChallengeToken(token) {
+  challengeToken = token || null;
+}
+
+function buildHeaders(extra, hasBody, useChallenge) {
   const headers = { ...(extra || {}) };
   if (hasBody) headers['Content-Type'] = 'application/json';
-  if (accessToken) headers['Authorization'] = `Bearer ${accessToken}`;
+  const token = useChallenge ? challengeToken : accessToken;
+  if (token) headers['Authorization'] = `Bearer ${token}`;
   return headers;
 }
 
@@ -58,12 +67,12 @@ async function refreshAccessToken() {
   return refreshPromise;
 }
 
-async function request(path, { method = 'GET', body, auth = false, retry = true } = {}) {
+async function request(path, { method = 'GET', body, auth = false, challenge = false, retry = true } = {}) {
   const hasBody = body !== undefined;
   const res = await fetch(`${BASE}${path}`, {
     method,
     credentials: 'include',
-    headers: buildHeaders(undefined, hasBody),
+    headers: buildHeaders(undefined, hasBody, challenge),
     body: hasBody ? JSON.stringify(body) : undefined,
   });
 
@@ -96,12 +105,19 @@ export const api = {
   imageUrl: (id) => (id ? `${BASE}/images/${id}` : null),
 
   // Auth
-  login: (username, password) => request('/auth/login', { method: 'POST', body: { username, password } }),
-  challengePassword: (new_password) =>
-    request('/auth/challenge/password', { method: 'POST', body: { new_password }, auth: true }),
-  totpInit: () => request('/auth/challenge/totp/init', { method: 'POST', auth: true }),
-  totpVerify: (code) => request('/auth/challenge/totp/verify', { method: 'POST', body: { code }, auth: true }),
-  mfa: (code) => request('/auth/mfa', { method: 'POST', body: { code }, auth: true }),
+  login: async (username, password) => {
+    const res = await request('/auth/login', { method: 'POST', body: { username, password } });
+    setChallengeToken(res.challenge_token);
+    return res;
+  },
+  challengePassword: async (new_password) => {
+    const res = await request('/auth/challenge/password', { method: 'POST', body: { new_password }, challenge: true });
+    setChallengeToken(res.challenge_token);
+    return res;
+  },
+  totpInit: () => request('/auth/challenge/totp/init', { method: 'POST', challenge: true }),
+  totpVerify: (code) => request('/auth/challenge/totp/verify', { method: 'POST', body: { code }, challenge: true }),
+  mfa: (code) => request('/auth/mfa', { method: 'POST', body: { code }, challenge: true }),
   logout: () => request('/auth/logout', { method: 'POST' }),
   me: () => request('/auth/me', { auth: true }),
   regenerateRecovery: () => request('/auth/recovery/regenerate', { method: 'POST', auth: true }),
