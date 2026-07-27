@@ -136,5 +136,18 @@ export default {
         "particleCount": "{current}/{max} Partiklů",
         "hint": "Levý klik pro postrčení partiklů, pravý klik pro spawn nových! Podržením nabijete silnější efekt.",
         "chargeIndicator": "Nabíjení: {percent}%"
+    },
+    "linktree": {
+        "title": "Odkazy",
+        "subtitle": "Vybrané užitečné odkazy.",
+        "searchPlaceholder": "Hledat odkazy…",
+        "all": "Vše",
+        "empty": "Žádné odkazy neodpovídají vašemu hledání.",
+        "categories": {
+            "dev": "Vývoj",
+            "social": "Sociální",
+            "games": "Hry",
+            "3d": "3D tisk"
+        }
     }
 }

@@ -30,6 +30,19 @@ export default defineConfig({
   },
   assetsInclude: ['**/*.json', '**/*.mp4', '**/*.svg', '**/*.png'],
   server: {
-    hmr: true
+    hmr: true,
+    proxy: {
+      '/sm-api': {
+        target: 'http://127.0.0.1:8001',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/sm-api/, '/api')
+      },
+      '/sm-ws': {
+        target: 'ws://127.0.0.1:8001',
+        ws: true,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/sm-ws/, '/ws')
+      }
+    }
   }
 })

@@ -47,7 +47,7 @@ export default {
             "title": "Über Mich",
             "age": "Ich bin {age} Jahre alt (am 09.07.2003 geboren) und {status}.",
             "location": "Komme ursprünglich aus Baden und arbeite jetzt in München.",
-            "gym": "Seit {years} (Juli 2021) gehe ich 3-5 mal die Woche im Gym und achte auf maximale Gains.",
+            "gym": "Seit {years} (Juli 2021) gehe ich 3-5 mal die Woche ins Gym und achte auf maximale Gains.",
             "developer": "Als Hobby-Dev programmiere ich auf was ich Lust habe, wie diese Webseite. Manchmal programmiere ich auch sinnvolles.",
             "year": "einem Jahr",
             "years": "{count} Jahren",
@@ -136,5 +136,18 @@ export default {
         "particleCount": "{current}/{max} Partikel",
         "hint": "Linksklick um Partikel zu schubsen, Rechtsklick um neue zu spawnen! Halten zum Aufladen für stärkere Effekte.",
         "chargeIndicator": "Aufladung: {percent}%"
+    },
+    "linktree": {
+        "title": "Links",
+        "subtitle": "Eine kuratierte Sammlung nützlicher Links.",
+        "searchPlaceholder": "Links suchen…",
+        "all": "Alle",
+        "empty": "Keine Links gefunden.",
+        "categories": {
+            "dev": "Entwicklung",
+            "social": "Soziales",
+            "games": "Spiele",
+            "3d": "3D-Druck"
+        }
     }
 }

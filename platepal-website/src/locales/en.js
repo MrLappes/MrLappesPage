@@ -136,5 +136,18 @@ export default {
         "particleCount": "{current}/{max} particles",
         "hint": "Left click to push particles, right click to spawn new ones! Hold to charge for stronger effects.",
         "chargeIndicator": "Charging: {percent}%"
+    },
+    "linktree": {
+        "title": "Links",
+        "subtitle": "A curated collection of useful links.",
+        "searchPlaceholder": "Search links…",
+        "all": "All",
+        "empty": "No links match your search.",
+        "categories": {
+            "dev": "Dev",
+            "social": "Social",
+            "games": "Games",
+            "3d": "3D Printing"
+        }
     }
 }

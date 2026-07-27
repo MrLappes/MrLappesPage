@@ -1,14 +1,21 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 import AnimatedBackground from './components/AnimatedBackground.vue';
 
 const { t, locale } = useI18n();
+const route = useRoute();
 
 const darkMode = ref(localStorage.getItem('darkMode') === 'true' || window.matchMedia('(prefers-color-scheme: dark)').matches);
 const showParticles = ref(localStorage.getItem('showParticles') !== 'false');
 const maxParticles = ref(parseInt(localStorage.getItem('maxParticles')) || 500);
 const mobileMenuOpen = ref(false);
+
+// Check if current route is shared markdown related
+const isSharedMarkdownRoute = computed(() => {
+  return route.path === '/sm' || route.path === '/login';
+});
 
 const languages = [
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
@@ -96,6 +103,11 @@ const toggleMobileMenu = (event) => {
 };
 
 const handleClickOutside = (event) => {
+  // Don't handle clicks on SharedMarkdown route
+  if (window.location.pathname === '/sm' || window.location.pathname === '/login') {
+    return;
+  }
+  
   if (event.target.closest('.mobile-menu-button')) {
     return;
   }
@@ -128,7 +140,7 @@ const toggleTouchMode = () => {
       :touchMode="touchMode"
     />
     
-    <header class="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-md transition-all duration-300 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm">
+    <header v-if="!isSharedMarkdownRoute" class="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-md transition-all duration-300 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm">
       <div class="container mx-auto px-4 py-3 flex justify-between items-center">
         <div class="flex items-center space-x-3">
           <img src="/icon.png" class="h-12 w-12 transition-transform duration-300 transform hover:rotate-12" alt="PlatePal logo" />
@@ -136,7 +148,29 @@ const toggleTouchMode = () => {
             PlatePal
           </h1>
         </div>
-        
+
+        <!-- Desktop Nav Links -->
+        <nav class="hidden md:flex items-center space-x-1">
+          <router-link
+            to="/"
+            class="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200"
+            :class="route.path === '/'
+              ? 'bg-[#e384c7]/15 text-[#9e6593] dark:text-[#e384c7]'
+              : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+          >
+            Home
+          </router-link>
+          <router-link
+            to="/linktree"
+            class="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200"
+            :class="route.path === '/linktree'
+              ? 'bg-[#e384c7]/15 text-[#9e6593] dark:text-[#e384c7]'
+              : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+          >
+            Links
+          </router-link>
+        </nav>
+
         <!-- Desktop Controls - Hidden on mobile -->
         <div class="hidden md:flex items-center space-x-4">
           <!-- Language Selector -->
@@ -239,6 +273,30 @@ const toggleTouchMode = () => {
         @click.stop
       >
         <div class="space-y-5">
+          <!-- Nav Links in Mobile Menu -->
+          <div class="flex gap-2 pb-1 border-b dark:border-gray-700">
+            <router-link
+              to="/"
+              @click="mobileMenuOpen = false"
+              class="flex-1 text-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              :class="route.path === '/'
+                ? 'bg-gradient-to-r from-[#e384c7] to-[#9e6593] text-white shadow'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'"
+            >
+              🏠 Home
+            </router-link>
+            <router-link
+              to="/linktree"
+              @click="mobileMenuOpen = false"
+              class="flex-1 text-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              :class="route.path === '/linktree'
+                ? 'bg-gradient-to-r from-[#e384c7] to-[#9e6593] text-white shadow'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'"
+            >
+              🔗 Links
+            </router-link>
+          </div>
+
           <!-- Dark Mode Toggle in Mobile Menu -->
           <div class="flex justify-between items-center">
             <span class="text-gray-700 dark:text-gray-300 pt-4 font-medium">{{ !darkMode ? '☀️ Light Mode' : '🌙 Dark Mode' }}</span>
@@ -332,7 +390,7 @@ const toggleTouchMode = () => {
       
     </header>
     
-    <main class="container mx-auto px-4 py-8 relative z-10">
+    <main :class="isSharedMarkdownRoute ? '' : 'container mx-auto px-4 py-8 relative z-10'">
       <router-view v-slot="{ Component }">
         <transition name="page" mode="out-in">
           <component :is="Component" :darkMode="darkMode" />
@@ -340,7 +398,7 @@ const toggleTouchMode = () => {
       </router-view>
     </main>
     
-    <footer class="py-6 bg-white dark:bg-gray-800 shadow-inner transition-colors duration-300 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm relative z-10">
+    <footer v-if="!isSharedMarkdownRoute" class="py-6 bg-white dark:bg-gray-800 shadow-inner transition-colors duration-300 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm relative z-10">
       <div class="container mx-auto px-4 text-center">
         <div class="flex flex-wrap justify-center items-center gap-4 mb-3">
           <router-link 

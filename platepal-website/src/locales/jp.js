@@ -131,5 +131,18 @@ export default {
         "particleCount": "パーティクル：{current}/{max}",
         "hint": "左クリックでパーティクルを押し、右クリックで新しいパーティクルを生成！長押しで効果アップ。",
         "chargeIndicator": "チャージ：{percent}%"
+    },
+    "linktree": {
+        "title": "リンク集",
+        "subtitle": "厳選された便利なリンク集です。",
+        "searchPlaceholder": "リンクを検索…",
+        "all": "すべて",
+        "empty": "検索に一致するリンクがありません。",
+        "categories": {
+            "dev": "開発",
+            "social": "SNS",
+            "games": "ゲーム",
+            "3d": "3Dプリント"
+        }
     }
 }
