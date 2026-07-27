@@ -46,7 +46,11 @@ function flashExport(msg) {
 
 async function fetchDish() {
   const dish = await api.exportRecipe(props.slug, locale.value, exportPortion.value);
-  if (recipe.value?.image_id) dish.imageUri = api.absoluteImageUrl(recipe.value.image_id);
+  if (recipe.value?.image_id) {
+    const url = api.absoluteImageUrl(recipe.value.image_id);
+    dish.imageUrl = url;
+    dish.imageUri = url;
+  }
   return dish;
 }
 

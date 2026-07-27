@@ -101,12 +101,15 @@ async def export_recipe(
     locale: str | None = Query(default=None),
     portion: str = Query(default="serving"),
 ):
-    """Export a recipe as a PlatePal Tracker compatible dish.
+    """Export a recipe as a PlatePal Tracker (Flutter app) compatible dish.
 
-    The tracker's "Import from JSON" screen accepts a bare dish object; the file
-    import accepts ``{"dishes": [...]}``. This returns the bare dish so the
-    frontend can offer both. ``portion=serving`` (default) scales everything to a
-    single serving; ``portion=whole`` exports the full recipe.
+    The returned object matches the tracker's ``Dish.fromJson``: a nested
+    ``nutrition`` object holds the dish totals and each ingredient carries an
+    ``amount`` (grams), ``unit`` and a nested per-100g ``nutrition`` object.
+    Top-level macro fields and ``*Per100`` aliases are also included so the
+    tracker's alternative import paths and file import all work.
+    ``portion=serving`` (default) scales everything to a single serving;
+    ``portion=whole`` exports the full recipe.
     """
     loc = pick_locale(locale)
     per_serving = portion != "whole"
@@ -125,8 +128,8 @@ async def export_recipe(
         divisor = servings if per_serving else 1
 
         cur.execute(
-            "SELECT ri.grams, i.kcal, i.protein, i.carbs, i.fat, i.fiber, i.sugar, i.salt, "
-            "it.name FROM recipe_ingredients ri "
+            "SELECT ri.grams, i.slug AS ingredient_slug, i.kcal, i.protein, i.carbs, i.fat, "
+            "i.fiber, i.sugar, i.salt, it.name FROM recipe_ingredients ri "
             "JOIN ingredients i ON i.id = ri.ingredient_id "
             "JOIN ingredient_translations it ON it.ingredient_id = i.id AND it.locale = ? "
             "WHERE ri.recipe_id = ? ORDER BY ri.sort_order, ri.id",
@@ -139,21 +142,37 @@ async def export_recipe(
         for ing in cur.fetchall():
             grams = ing["grams"] / divisor
             factor = grams / 100.0
-            fiber_per_100 = round(ing["fiber"], 1) if ing["fiber"] is not None else None
+            # Per-100g values (as stored on the wiki ingredient). The tracker
+            # multiplies these by amount/100 to get the ingredient contribution.
+            kcal_100 = round(ing["kcal"] or 0, 1)
+            protein_100 = round(ing["protein"] or 0, 1)
+            carbs_100 = round(ing["carbs"] or 0, 1)
+            fat_100 = round(ing["fat"] or 0, 1)
+            fiber_100 = round(ing["fiber"], 1) if ing["fiber"] is not None else 0.0
+            sugar_100 = round(ing["sugar"], 1) if ing["sugar"] is not None else 0.0
+            # Wiki stores salt (g); tracker nutrition uses sodium (mg).
+            sodium_100 = round(ing["salt"] / 2.5 * 1000, 1) if ing["salt"] else 0.0
             ingredients.append({
+                "id": ing["ingredient_slug"],
                 "name": ing["name"],
+                "amount": round(grams, 1),
                 "quantity": round(grams, 1),
                 "unit": "g",
-                "caloriesPer100": round(ing["kcal"] or 0, 1),
-                "proteinPer100": round(ing["protein"] or 0, 1),
-                "carbsPer100": round(ing["carbs"] or 0, 1),
-                "fatPer100": round(ing["fat"] or 0, 1),
-                "fiberPer100": fiber_per_100,
-                "calories": round((ing["kcal"] or 0) * factor, 1),
-                "protein": round((ing["protein"] or 0) * factor, 1),
-                "carbs": round((ing["carbs"] or 0) * factor, 1),
-                "fat": round((ing["fat"] or 0) * factor, 1),
-                "fiber": round(ing["fiber"] * factor, 1) if ing["fiber"] is not None else None,
+                "nutrition": {
+                    "calories": kcal_100,
+                    "protein": protein_100,
+                    "carbs": carbs_100,
+                    "fat": fat_100,
+                    "fiber": fiber_100,
+                    "sugar": sugar_100,
+                    "sodium": sodium_100,
+                },
+                # Aliases for the tracker's raw-map import path.
+                "caloriesPer100": kcal_100,
+                "proteinPer100": protein_100,
+                "carbsPer100": carbs_100,
+                "fatPer100": fat_100,
+                "fiberPer100": fiber_100,
             })
             for key in totals:
                 value = ing[key]
@@ -161,33 +180,45 @@ async def export_recipe(
                     totals[key] += value * factor
 
         totals = {k: round(v, 1) for k, v in totals.items()}
-        # Recipe stores salt (g); the tracker's dish.sodium is milligrams.
-        sodium_mg = round(totals["salt"] / 2.5 * 1000, 1) if totals["salt"] else None
+        # Recipe stores salt (g); the tracker's dish sodium is milligrams.
+        sodium_mg = round(totals["salt"] / 2.5 * 1000, 1) if totals["salt"] else 0.0
         now = datetime.now(timezone.utc).isoformat()
         dish_id = str(uuid.uuid5(_TRACKER_NS, f"{row['slug']}:{loc}:{portion}"))
+        nutrition = {
+            "calories": totals["kcal"],
+            "protein": totals["protein"],
+            "carbs": totals["carbs"],
+            "fat": totals["fat"],
+            "fiber": totals["fiber"],
+            "sugar": totals["sugar"],
+            "sodium": sodium_mg,
+        }
 
         dish = {
             "id": dish_id,
             "name": row["title"],
             "description": row["summary"] or None,
+            "imageUrl": None,
             "imageUri": None,
-            "calories": totals["kcal"],
-            "protein": totals["protein"],
-            "carbs": totals["carbs"],
-            "fat": totals["fat"],
-            "fiber": totals["fiber"] or None,
-            "sodium": sodium_mg,
-            "sugar": totals["sugar"] or None,
-            "cholesterol": None,
+            "category": None,
             "isFavorite": False,
             "tags": ["PlatePal Wiki"],
-            "defaultMealType": None,
             "createdAt": now,
             "updatedAt": now,
+            "nutrition": nutrition,
+            # Top-level macro aliases for import paths that read them directly.
+            "calories": nutrition["calories"],
+            "protein": nutrition["protein"],
+            "carbs": nutrition["carbs"],
+            "fat": nutrition["fat"],
+            "fiber": nutrition["fiber"],
+            "sugar": nutrition["sugar"],
+            "sodium": nutrition["sodium"],
             "ingredients": ingredients,
         }
 
     return dish
+
 
 
 @router.get("/admin/recipes")
