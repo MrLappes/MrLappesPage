@@ -1,0 +1,17 @@
+# Secrets & local state — never commit these
+.env
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+data/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+env/
+.pytest_cache/
+.mypy_cache/

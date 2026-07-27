@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import AnimatedBackground from './components/AnimatedBackground.vue';
@@ -11,11 +11,6 @@ const darkMode = ref(localStorage.getItem('darkMode') === 'true' || window.match
 const showParticles = ref(localStorage.getItem('showParticles') !== 'false');
 const maxParticles = ref(parseInt(localStorage.getItem('maxParticles')) || 500);
 const mobileMenuOpen = ref(false);
-
-// Check if current route is shared markdown related
-const isSharedMarkdownRoute = computed(() => {
-  return route.path === '/sm' || route.path === '/login';
-});
 
 const languages = [
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
@@ -103,11 +98,6 @@ const toggleMobileMenu = (event) => {
 };
 
 const handleClickOutside = (event) => {
-  // Don't handle clicks on SharedMarkdown route
-  if (window.location.pathname === '/sm' || window.location.pathname === '/login') {
-    return;
-  }
-  
   if (event.target.closest('.mobile-menu-button')) {
     return;
   }
@@ -140,7 +130,7 @@ const toggleTouchMode = () => {
       :touchMode="touchMode"
     />
     
-    <header v-if="!isSharedMarkdownRoute" class="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-md transition-all duration-300 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm">
+    <header class="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-md transition-all duration-300 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm">
       <div class="container mx-auto px-4 py-3 flex justify-between items-center">
         <div class="flex items-center space-x-3">
           <img src="/icon.png" class="h-12 w-12 transition-transform duration-300 transform hover:rotate-12" alt="PlatePal logo" />
@@ -168,6 +158,15 @@ const toggleTouchMode = () => {
               : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
           >
             Links
+          </router-link>
+          <router-link
+            to="/wiki"
+            class="px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200"
+            :class="route.path.startsWith('/wiki')
+              ? 'bg-[#e384c7]/15 text-[#9e6593] dark:text-[#e384c7]'
+              : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+          >
+            {{ t('wiki.nav') }}
           </router-link>
         </nav>
 
@@ -295,6 +294,16 @@ const toggleTouchMode = () => {
             >
               🔗 Links
             </router-link>
+            <router-link
+              to="/wiki"
+              @click="mobileMenuOpen = false"
+              class="flex-1 text-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              :class="route.path.startsWith('/wiki')
+                ? 'bg-gradient-to-r from-[#e384c7] to-[#9e6593] text-white shadow'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'"
+            >
+              📖 {{ t('wiki.nav') }}
+            </router-link>
           </div>
 
           <!-- Dark Mode Toggle in Mobile Menu -->
@@ -390,7 +399,7 @@ const toggleTouchMode = () => {
       
     </header>
     
-    <main :class="isSharedMarkdownRoute ? '' : 'container mx-auto px-4 py-8 relative z-10'">
+    <main class="container mx-auto px-4 py-8 relative z-10">
       <router-view v-slot="{ Component }">
         <transition name="page" mode="out-in">
           <component :is="Component" :darkMode="darkMode" />
@@ -398,7 +407,7 @@ const toggleTouchMode = () => {
       </router-view>
     </main>
     
-    <footer v-if="!isSharedMarkdownRoute" class="py-6 bg-white dark:bg-gray-800 shadow-inner transition-colors duration-300 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm relative z-10">
+    <footer class="py-6 bg-white dark:bg-gray-800 shadow-inner transition-colors duration-300 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm relative z-10">
       <div class="container mx-auto px-4 text-center">
         <div class="flex flex-wrap justify-center items-center gap-4 mb-3">
           <router-link 

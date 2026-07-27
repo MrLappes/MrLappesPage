@@ -1,0 +1,1 @@
+"""Recipe Wiki backend package."""

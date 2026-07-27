@@ -1,0 +1,18 @@
+services:
+  recipe-backend:
+    build: .
+    image: platepal-recipe-backend
+    container_name: platepal-recipe-backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      # SQLite lives on a persistent named volume, not in the image.
+      DATABASE_PATH: /app/data/recipes.db
+    ports:
+      # Bind to loopback only — nginx is the sole entry point.
+      - "127.0.0.1:8091:8091"
+    volumes:
+      - recipe-data:/app/data
+
+volumes:
+  recipe-data:

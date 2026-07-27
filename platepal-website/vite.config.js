@@ -32,17 +32,11 @@ export default defineConfig({
   server: {
     hmr: true,
     proxy: {
-      '/sm-api': {
-        target: 'http://127.0.0.1:8001',
+      '/wiki-api': {
+        target: 'http://127.0.0.1:8091',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/sm-api/, '/api')
+        rewrite: (path) => path.replace(/^\/wiki-api/, '/api'),
       },
-      '/sm-ws': {
-        target: 'ws://127.0.0.1:8001',
-        ws: true,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/sm-ws/, '/ws')
-      }
-    }
+    },
   }
 })

@@ -1,4 +1,119 @@
 export default {
+    "wiki": {
+        "nav": "Recepty",
+        "recipes": {
+            "title": "Wiki receptů",
+            "subtitle": "Procházejte recepty s automatickými nutričními hodnotami",
+            "searchPlaceholder": "Hledat recepty…",
+            "empty": "Zatím žádné recepty. Zkuste to brzy znovu!"
+        },
+        "ingredients": {
+            "title": "Suroviny",
+            "subtitle": "Nutriční hodnoty každé suroviny",
+            "searchPlaceholder": "Hledat suroviny…",
+            "empty": "Zatím žádné suroviny."
+        },
+        "recipe": {
+            "back": "Zpět na recepty",
+            "notFound": "Recept nenalezen.",
+            "servings": "{count} porcí",
+            "perServing": "porce",
+            "ingredients": "Suroviny",
+            "instructions": "Postup"
+        },
+        "ingredient": {
+            "back": "Zpět na suroviny",
+            "notFound": "Surovina nenalezena.",
+            "per100g": "Hodnoty na 100 g",
+            "about": "Popis",
+            "usedIn": "Použito v"
+        },
+        "nutrition": "Nutriční hodnoty",
+        "perServing": "Na porci",
+        "total": "Celkem",
+        "perServingHint": "Automaticky vypočítáno ze surovin pro {count} porcí.",
+        "nutrients": {
+            "kcal": "Kalorie",
+            "protein": "Bílkoviny",
+            "carbs": "Sacharidy",
+            "fat": "Tuky",
+            "fiber": "Vláknina",
+            "sugar": "Cukry",
+            "salt": "Sůl"
+        },
+        "imageUpload": {
+            "hint": "Není vybrán žádný obrázek",
+            "choose": "Nahrát obrázek",
+            "remove": "Odebrat",
+            "invalid": "Vyberte prosím obrázkový soubor.",
+            "tooLarge": "Obrázek je příliš velký (max. 8 MB).",
+            "failed": "Nahrání se nezdařilo."
+        },
+        "picker": {
+            "select": "Vyberte surovinu…",
+            "add": "Přidat",
+            "empty": "Žádné suroviny k dispozici. Nejprve nějakou vytvořte."
+        },
+        "editor": {
+            "linkPrompt": "Zadejte URL"
+        },
+        "admin": {
+            "login": {
+                "title": "Přístup administrátora",
+                "username": "Uživatelské jméno",
+                "password": "Heslo",
+                "submit": "Přihlásit se",
+                "invalid": "Neplatné přihlašovací údaje.",
+                "passwordMismatch": "Hesla se neshodují.",
+                "changeHint": "Z bezpečnostních důvodů si prosím zvolte nové heslo.",
+                "newPassword": "Nové heslo",
+                "confirmPassword": "Potvrďte heslo",
+                "setPassword": "Nastavit heslo",
+                "totpSetupHint": "Naskenujte tento QR kód aplikací autentikátoru a poté zadejte 6místný kód.",
+                "enterCode": "Ověřovací kód",
+                "enableTotp": "Zapnout dvoufázové ověření",
+                "totpHint": "Zadejte kód z aplikace autentikátoru.",
+                "verify": "Ověřit",
+                "recoveryHint": "Ztratili jste zařízení? Zadejte místo toho záložní kód.",
+                "invalidCode": "Neplatný kód.",
+                "recoveryTitle": "Uložte si záložní kódy",
+                "recoveryWarning": "Uschovejte je na bezpečném místě. Každý kód funguje jen jednou a zobrazí se pouze nyní.",
+                "download": "Stáhnout",
+                "copy": "Kopírovat",
+                "savedContinue": "Uložil jsem je — pokračovat"
+            },
+            "dashboard": {
+                "title": "Správa wiki",
+                "welcome": "Přihlášen jako {name}",
+                "recovery": "Záložní kódy",
+                "logout": "Odhlásit se",
+                "new": "Nový",
+                "draft": "Koncept",
+                "confirmDelete": "Smazat tuto položku? Tuto akci nelze vrátit.",
+                "confirmRegenerate": "Vygenerovat nové záložní kódy? Vaše staré kódy přestanou fungovat."
+            },
+            "editor": {
+                "newRecipe": "Nový recept",
+                "editRecipe": "Upravit recept",
+                "newIngredient": "Nová surovina",
+                "editIngredient": "Upravit surovinu",
+                "image": "Obrázek",
+                "nutritionPer100": "Nutriční hodnoty na 100 g",
+                "name": "Název",
+                "title": "Název",
+                "summary": "Krátký souhrn",
+                "description": "Popis",
+                "descriptionPlaceholder": "Napište popis ve stylu wiki…",
+                "instructionsPlaceholder": "Napište postup přípravy…",
+                "servings": "Porce",
+                "published": "Publikováno (viditelné pro všechny)",
+                "cancel": "Zrušit",
+                "save": "Uložit",
+                "missingNames": "Zadejte prosím název pro: {locales}",
+                "missingTitles": "Zadejte prosím název pro: {locales}"
+            }
+        }
+    },
     "header": {
         "particles": "Partikle",
         "particlesToggle": {

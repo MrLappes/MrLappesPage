@@ -1,4 +1,119 @@
 export default {
+    "wiki": {
+        "nav": "Recipes",
+        "recipes": {
+            "title": "Recipe Wiki",
+            "subtitle": "Browse recipes with automatic nutrition facts",
+            "searchPlaceholder": "Search recipes…",
+            "empty": "No recipes yet. Check back soon!"
+        },
+        "ingredients": {
+            "title": "Ingredients",
+            "subtitle": "Nutrition stats for every ingredient",
+            "searchPlaceholder": "Search ingredients…",
+            "empty": "No ingredients yet."
+        },
+        "recipe": {
+            "back": "Back to recipes",
+            "notFound": "Recipe not found.",
+            "servings": "{count} servings",
+            "perServing": "serving",
+            "ingredients": "Ingredients",
+            "instructions": "Instructions"
+        },
+        "ingredient": {
+            "back": "Back to ingredients",
+            "notFound": "Ingredient not found.",
+            "per100g": "Values per 100 g",
+            "about": "About",
+            "usedIn": "Used in"
+        },
+        "nutrition": "Nutrition",
+        "perServing": "Per serving",
+        "total": "Total",
+        "perServingHint": "Calculated automatically from ingredients for {count} servings.",
+        "nutrients": {
+            "kcal": "Calories",
+            "protein": "Protein",
+            "carbs": "Carbs",
+            "fat": "Fat",
+            "fiber": "Fiber",
+            "sugar": "Sugar",
+            "salt": "Salt"
+        },
+        "imageUpload": {
+            "hint": "No image selected",
+            "choose": "Upload image",
+            "remove": "Remove",
+            "invalid": "Please choose an image file.",
+            "tooLarge": "Image is too large (max 8 MB).",
+            "failed": "Upload failed."
+        },
+        "picker": {
+            "select": "Select an ingredient…",
+            "add": "Add",
+            "empty": "No ingredients available. Create one first."
+        },
+        "editor": {
+            "linkPrompt": "Enter a URL"
+        },
+        "admin": {
+            "login": {
+                "title": "Admin Access",
+                "username": "Username",
+                "password": "Password",
+                "submit": "Log in",
+                "invalid": "Invalid credentials.",
+                "passwordMismatch": "Passwords do not match.",
+                "changeHint": "For security, please choose a new password.",
+                "newPassword": "New password",
+                "confirmPassword": "Confirm password",
+                "setPassword": "Set password",
+                "totpSetupHint": "Scan this QR code with your authenticator app, then enter the 6-digit code.",
+                "enterCode": "Authentication code",
+                "enableTotp": "Enable two-factor auth",
+                "totpHint": "Enter the code from your authenticator app.",
+                "verify": "Verify",
+                "recoveryHint": "Lost your device? Enter a recovery code instead.",
+                "invalidCode": "Invalid code.",
+                "recoveryTitle": "Save your recovery codes",
+                "recoveryWarning": "Store these somewhere safe. Each code works once and they are shown only now.",
+                "download": "Download",
+                "copy": "Copy",
+                "savedContinue": "I've saved them — continue"
+            },
+            "dashboard": {
+                "title": "Wiki Admin",
+                "welcome": "Signed in as {name}",
+                "recovery": "Recovery codes",
+                "logout": "Log out",
+                "new": "New",
+                "draft": "Draft",
+                "confirmDelete": "Delete this item? This cannot be undone.",
+                "confirmRegenerate": "Generate new recovery codes? Your old codes will stop working."
+            },
+            "editor": {
+                "newRecipe": "New recipe",
+                "editRecipe": "Edit recipe",
+                "newIngredient": "New ingredient",
+                "editIngredient": "Edit ingredient",
+                "image": "Image",
+                "nutritionPer100": "Nutrition per 100 g",
+                "name": "Name",
+                "title": "Title",
+                "summary": "Short summary",
+                "description": "Description",
+                "descriptionPlaceholder": "Write a wiki-style description…",
+                "instructionsPlaceholder": "Write the preparation steps…",
+                "servings": "Servings",
+                "published": "Published (visible to everyone)",
+                "cancel": "Cancel",
+                "save": "Save",
+                "missingNames": "Please provide a name for: {locales}",
+                "missingTitles": "Please provide a title for: {locales}"
+            }
+        }
+    },
     "header": {
         "particles": "Particles",
         "particlesToggle": {

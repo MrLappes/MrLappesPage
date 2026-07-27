@@ -1,4 +1,119 @@
 export default {
+    "wiki": {
+        "nav": "Rezepte",
+        "recipes": {
+            "title": "Rezept-Wiki",
+            "subtitle": "Rezepte mit automatischen Nährwertangaben durchstöbern",
+            "searchPlaceholder": "Rezepte suchen…",
+            "empty": "Noch keine Rezepte. Schau bald wieder vorbei!"
+        },
+        "ingredients": {
+            "title": "Zutaten",
+            "subtitle": "Nährwerte für jede Zutat",
+            "searchPlaceholder": "Zutaten suchen…",
+            "empty": "Noch keine Zutaten."
+        },
+        "recipe": {
+            "back": "Zurück zu den Rezepten",
+            "notFound": "Rezept nicht gefunden.",
+            "servings": "{count} Portionen",
+            "perServing": "Portion",
+            "ingredients": "Zutaten",
+            "instructions": "Zubereitung"
+        },
+        "ingredient": {
+            "back": "Zurück zu den Zutaten",
+            "notFound": "Zutat nicht gefunden.",
+            "per100g": "Werte pro 100 g",
+            "about": "Beschreibung",
+            "usedIn": "Verwendet in"
+        },
+        "nutrition": "Nährwerte",
+        "perServing": "Pro Portion",
+        "total": "Gesamt",
+        "perServingHint": "Automatisch aus den Zutaten für {count} Portionen berechnet.",
+        "nutrients": {
+            "kcal": "Kalorien",
+            "protein": "Eiweiß",
+            "carbs": "Kohlenhydrate",
+            "fat": "Fett",
+            "fiber": "Ballaststoffe",
+            "sugar": "Zucker",
+            "salt": "Salz"
+        },
+        "imageUpload": {
+            "hint": "Kein Bild ausgewählt",
+            "choose": "Bild hochladen",
+            "remove": "Entfernen",
+            "invalid": "Bitte wähle eine Bilddatei.",
+            "tooLarge": "Bild ist zu groß (max. 8 MB).",
+            "failed": "Upload fehlgeschlagen."
+        },
+        "picker": {
+            "select": "Zutat auswählen…",
+            "add": "Hinzufügen",
+            "empty": "Keine Zutaten verfügbar. Lege zuerst eine an."
+        },
+        "editor": {
+            "linkPrompt": "URL eingeben"
+        },
+        "admin": {
+            "login": {
+                "title": "Admin-Zugang",
+                "username": "Benutzername",
+                "password": "Passwort",
+                "submit": "Anmelden",
+                "invalid": "Ungültige Zugangsdaten.",
+                "passwordMismatch": "Passwörter stimmen nicht überein.",
+                "changeHint": "Bitte wähle aus Sicherheitsgründen ein neues Passwort.",
+                "newPassword": "Neues Passwort",
+                "confirmPassword": "Passwort bestätigen",
+                "setPassword": "Passwort festlegen",
+                "totpSetupHint": "Scanne diesen QR-Code mit deiner Authenticator-App und gib dann den 6-stelligen Code ein.",
+                "enterCode": "Authentifizierungscode",
+                "enableTotp": "Zwei-Faktor-Authentifizierung aktivieren",
+                "totpHint": "Gib den Code aus deiner Authenticator-App ein.",
+                "verify": "Bestätigen",
+                "recoveryHint": "Gerät verloren? Gib stattdessen einen Wiederherstellungscode ein.",
+                "invalidCode": "Ungültiger Code.",
+                "recoveryTitle": "Speichere deine Wiederherstellungscodes",
+                "recoveryWarning": "Bewahre diese sicher auf. Jeder Code funktioniert nur einmal und wird nur jetzt angezeigt.",
+                "download": "Herunterladen",
+                "copy": "Kopieren",
+                "savedContinue": "Gespeichert — weiter"
+            },
+            "dashboard": {
+                "title": "Wiki-Verwaltung",
+                "welcome": "Angemeldet als {name}",
+                "recovery": "Wiederherstellungscodes",
+                "logout": "Abmelden",
+                "new": "Neu",
+                "draft": "Entwurf",
+                "confirmDelete": "Diesen Eintrag löschen? Das kann nicht rückgängig gemacht werden.",
+                "confirmRegenerate": "Neue Wiederherstellungscodes erzeugen? Deine alten Codes werden ungültig."
+            },
+            "editor": {
+                "newRecipe": "Neues Rezept",
+                "editRecipe": "Rezept bearbeiten",
+                "newIngredient": "Neue Zutat",
+                "editIngredient": "Zutat bearbeiten",
+                "image": "Bild",
+                "nutritionPer100": "Nährwerte pro 100 g",
+                "name": "Name",
+                "title": "Titel",
+                "summary": "Kurzbeschreibung",
+                "description": "Beschreibung",
+                "descriptionPlaceholder": "Schreibe eine Wiki-Beschreibung…",
+                "instructionsPlaceholder": "Schreibe die Zubereitungsschritte…",
+                "servings": "Portionen",
+                "published": "Veröffentlicht (für alle sichtbar)",
+                "cancel": "Abbrechen",
+                "save": "Speichern",
+                "missingNames": "Bitte gib einen Namen an für: {locales}",
+                "missingTitles": "Bitte gib einen Titel an für: {locales}"
+            }
+        }
+    },
     "header": {
         "particles": "Partikel",
         "particlesToggle": {

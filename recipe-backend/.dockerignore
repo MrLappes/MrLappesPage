@@ -1,0 +1,17 @@
+# Keep the build context small and never ship secrets or local state.
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+.git
+.gitignore
+.dockerignore
+README.md
+hash_password.py
+data/

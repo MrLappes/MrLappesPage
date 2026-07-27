@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../components/HomePage.vue';
+import { auth, initAuth } from '../wiki/auth.js';
 
 const routes = [
   {
@@ -18,44 +19,74 @@ const routes = [
     component: () => import('../views/ConvertToMP3.vue') // Lazy-loaded
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/Login.vue') // Lazy-loaded
-  },
-  {
     path: '/linktree',
     name: 'LinkTree',
     component: () => import('../views/LinkTree.vue') // Lazy-loaded
   },
+  // --- Recipe wiki (public) ---
   {
-    path: '/sm',
-    name: 'SharedMarkdown',
-    component: () => import('../views/SharedMarkdown.vue'), // Lazy-loaded
-    beforeEnter: async (to, from, next) => {
-      const token = localStorage.getItem('sm_token');
-      if (!token) {
-        next('/login');
-      } else {
-        // Verify token is still valid
-        try {
-          const response = await fetch('/sm-api/documents', {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          });
-          if (response.ok) {
-            next();
-          } else {
-            // Token expired or invalid
-            localStorage.removeItem('sm_token');
-            localStorage.removeItem('sm_username');
-            next('/login');
-          }
-        } catch (err) {
-          next('/login');
-        }
-      }
-    }
+    path: '/wiki',
+    redirect: { name: 'WikiRecipes' }
+  },
+  {
+    path: '/wiki/recipes',
+    name: 'WikiRecipes',
+    component: () => import('../views/wiki/RecipesList.vue')
+  },
+  {
+    path: '/wiki/recipes/:slug',
+    name: 'WikiRecipe',
+    component: () => import('../views/wiki/RecipeDetail.vue'),
+    props: true
+  },
+  {
+    path: '/wiki/ingredients',
+    name: 'WikiIngredients',
+    component: () => import('../views/wiki/IngredientsList.vue')
+  },
+  {
+    path: '/wiki/ingredients/:slug',
+    name: 'WikiIngredient',
+    component: () => import('../views/wiki/IngredientDetail.vue'),
+    props: true
+  },
+  // --- Recipe wiki (admin) ---
+  {
+    path: '/wiki/admin/login',
+    name: 'WikiAdminLogin',
+    component: () => import('../views/wiki/AdminLogin.vue')
+  },
+  {
+    path: '/wiki/admin',
+    name: 'WikiAdminDashboard',
+    component: () => import('../views/wiki/AdminDashboard.vue'),
+    meta: { requiresAdmin: true }
+  },
+  {
+    path: '/wiki/admin/recipes/new',
+    name: 'WikiAdminRecipeNew',
+    component: () => import('../views/wiki/RecipeEditor.vue'),
+    meta: { requiresAdmin: true }
+  },
+  {
+    path: '/wiki/admin/recipes/:id',
+    name: 'WikiAdminRecipeEdit',
+    component: () => import('../views/wiki/RecipeEditor.vue'),
+    props: true,
+    meta: { requiresAdmin: true }
+  },
+  {
+    path: '/wiki/admin/ingredients/new',
+    name: 'WikiAdminIngredientNew',
+    component: () => import('../views/wiki/IngredientEditor.vue'),
+    meta: { requiresAdmin: true }
+  },
+  {
+    path: '/wiki/admin/ingredients/:id',
+    name: 'WikiAdminIngredientEdit',
+    component: () => import('../views/wiki/IngredientEditor.vue'),
+    props: true,
+    meta: { requiresAdmin: true }
   }
 ];
 
@@ -69,6 +100,16 @@ const router = createRouter({
       return { top: 0 };
     }
   }
+});
+
+// Guard admin routes: wait for the initial silent refresh, then require auth.
+router.beforeEach(async (to) => {
+  if (!to.meta.requiresAdmin) return true;
+  if (!auth.ready) await initAuth();
+  if (!auth.isAuthenticated) {
+    return { name: 'WikiAdminLogin' };
+  }
+  return true;
 });
 
 export default router;

@@ -1,4 +1,119 @@
 export default {
+    "wiki": {
+        "nav": "レシピ",
+        "recipes": {
+            "title": "レシピウィキ",
+            "subtitle": "自動計算された栄養情報付きでレシピを閲覧",
+            "searchPlaceholder": "レシピを検索…",
+            "empty": "まだレシピがありません。また見に来てください！"
+        },
+        "ingredients": {
+            "title": "食材",
+            "subtitle": "各食材の栄養情報",
+            "searchPlaceholder": "食材を検索…",
+            "empty": "まだ食材がありません。"
+        },
+        "recipe": {
+            "back": "レシピ一覧へ戻る",
+            "notFound": "レシピが見つかりません。",
+            "servings": "{count}人分",
+            "perServing": "1人分",
+            "ingredients": "材料",
+            "instructions": "作り方"
+        },
+        "ingredient": {
+            "back": "食材一覧へ戻る",
+            "notFound": "食材が見つかりません。",
+            "per100g": "100gあたりの値",
+            "about": "説明",
+            "usedIn": "使用レシピ"
+        },
+        "nutrition": "栄養成分",
+        "perServing": "1人分",
+        "total": "合計",
+        "perServingHint": "{count}人分の材料から自動計算されます。",
+        "nutrients": {
+            "kcal": "カロリー",
+            "protein": "タンパク質",
+            "carbs": "炭水化物",
+            "fat": "脂質",
+            "fiber": "食物繊維",
+            "sugar": "糖質",
+            "salt": "塩分"
+        },
+        "imageUpload": {
+            "hint": "画像が選択されていません",
+            "choose": "画像をアップロード",
+            "remove": "削除",
+            "invalid": "画像ファイルを選択してください。",
+            "tooLarge": "画像が大きすぎます（最大8MB）。",
+            "failed": "アップロードに失敗しました。"
+        },
+        "picker": {
+            "select": "食材を選択…",
+            "add": "追加",
+            "empty": "利用できる食材がありません。先に作成してください。"
+        },
+        "editor": {
+            "linkPrompt": "URLを入力"
+        },
+        "admin": {
+            "login": {
+                "title": "管理者アクセス",
+                "username": "ユーザー名",
+                "password": "パスワード",
+                "submit": "ログイン",
+                "invalid": "認証情報が正しくありません。",
+                "passwordMismatch": "パスワードが一致しません。",
+                "changeHint": "セキュリティのため、新しいパスワードを設定してください。",
+                "newPassword": "新しいパスワード",
+                "confirmPassword": "パスワードの確認",
+                "setPassword": "パスワードを設定",
+                "totpSetupHint": "認証アプリでこのQRコードをスキャンし、6桁のコードを入力してください。",
+                "enterCode": "認証コード",
+                "enableTotp": "二段階認証を有効にする",
+                "totpHint": "認証アプリのコードを入力してください。",
+                "verify": "確認",
+                "recoveryHint": "デバイスを紛失しましたか？代わりにリカバリーコードを入力してください。",
+                "invalidCode": "コードが正しくありません。",
+                "recoveryTitle": "リカバリーコードを保存",
+                "recoveryWarning": "安全な場所に保管してください。各コードは一度のみ有効で、表示されるのは今だけです。",
+                "download": "ダウンロード",
+                "copy": "コピー",
+                "savedContinue": "保存しました — 続ける"
+            },
+            "dashboard": {
+                "title": "ウィキ管理",
+                "welcome": "{name} としてログイン中",
+                "recovery": "リカバリーコード",
+                "logout": "ログアウト",
+                "new": "新規",
+                "draft": "下書き",
+                "confirmDelete": "この項目を削除しますか？元に戻せません。",
+                "confirmRegenerate": "新しいリカバリーコードを生成しますか？古いコードは使えなくなります。"
+            },
+            "editor": {
+                "newRecipe": "新しいレシピ",
+                "editRecipe": "レシピを編集",
+                "newIngredient": "新しい食材",
+                "editIngredient": "食材を編集",
+                "image": "画像",
+                "nutritionPer100": "100gあたりの栄養成分",
+                "name": "名前",
+                "title": "タイトル",
+                "summary": "概要",
+                "description": "説明",
+                "descriptionPlaceholder": "ウィキ風の説明を書く…",
+                "instructionsPlaceholder": "調理手順を書く…",
+                "servings": "人数分",
+                "published": "公開（全員に表示）",
+                "cancel": "キャンセル",
+                "save": "保存",
+                "missingNames": "次の言語の名前を入力してください: {locales}",
+                "missingTitles": "次の言語のタイトルを入力してください: {locales}"
+            }
+        }
+    },
     "header": {
         "particles": "パーティクル",
         "particlesToggle": {

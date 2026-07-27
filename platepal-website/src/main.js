@@ -7,6 +7,7 @@ import de from './locales/de'
 import cs from './locales/cs'
 import jp from './locales/jp'
 import './style.css'
+import { initAuth } from './wiki/auth.js'
 
 const savedLocale = localStorage.getItem('locale')
 const browserLocale = navigator.language.split('-')[0]
@@ -35,3 +36,6 @@ const app = createApp(App)
 app.use(router)
 app.use(i18n)
 app.mount('#app')
+
+// Attempt a silent session restore for the admin (non-blocking).
+initAuth()
